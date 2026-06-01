@@ -1,9 +1,12 @@
-import type { ChangeEvent } from 'react'
+import { type ChangeEvent, useState } from 'react'
 import { usePreview } from '@/hooks/admin-posts'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { PostBody } from '@/components/PostBody'
 import { Skeleton } from '@/components/Skeleton'
 import { ErrorState } from '@/components/ErrorState'
+import { cn } from '@/lib/utils'
+
+type EditorView = 'write' | 'preview'
 
 /** Debounce preview requests to avoid a round-trip on every keystroke (SPEC §10). */
 const PREVIEW_DEBOUNCE_MS = 500
@@ -21,6 +24,7 @@ interface MarkdownEditorProps {
  * (sanitized) via the shared `PostBody`, so it matches published output.
  */
 export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: MarkdownEditorProps) {
+  const [mobileView, setMobileView] = useState<EditorView>('write')
   const debouncedValue = useDebouncedValue(value, PREVIEW_DEBOUNCE_MS)
   const preview = usePreview(debouncedValue)
   const hasPreviewContent = debouncedValue.trim().length > 0
@@ -46,9 +50,44 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
 
   return (
     <>
+      {/* Mobile-only view switch; both panes show side-by-side at lg+ */}
+      <div className="mb-3 flex gap-1 lg:hidden" role="group" aria-label="Editor view">
+        <button
+          type="button"
+          onClick={() => setMobileView('write')}
+          aria-pressed={mobileView === 'write'}
+          className={cn(
+            'rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+            mobileView === 'write'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground',
+          )}
+        >
+          Write
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileView('preview')}
+          aria-pressed={mobileView === 'preview'}
+          className={cn(
+            'rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+            mobileView === 'preview'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground',
+          )}
+        >
+          Preview
+        </button>
+      </div>
+
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Write pane — focus-within rings the pane when the textarea has focus */}
-        <div className="rounded-lg border bg-card focus-within:ring-2 focus-within:ring-ring">
+        <div
+          className={cn(
+            'rounded-lg border bg-card focus-within:ring-2 focus-within:ring-ring lg:block',
+            mobileView === 'write' ? 'block' : 'hidden',
+          )}
+        >
           <div className="border-b px-4 py-2">
             <label htmlFor={id} className="text-xs font-medium text-muted-foreground">
               Write
@@ -66,7 +105,12 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
         </div>
 
         {/* Preview pane */}
-        <div className="rounded-lg border bg-card">
+        <div
+          className={cn(
+            'rounded-lg border bg-card lg:block',
+            mobileView === 'preview' ? 'block' : 'hidden',
+          )}
+        >
           <div className="flex items-center justify-between border-b px-4 py-2">
             <span className="text-xs font-medium text-muted-foreground">Preview</span>
             {preview.isFetching && preview.data && (
