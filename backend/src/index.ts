@@ -33,7 +33,7 @@ app.get('/api/health', (c) => c.json({ status: 'ok' }))
 
 // Protected routes example
 const api = new Hono()
-api.use('*', requireAuth)
+api.use('/me', requireAuth)
 
 api.get('/me', (c) => {
   const user = c.get('user')
