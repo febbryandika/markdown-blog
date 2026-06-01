@@ -6,6 +6,7 @@ import { handleError, notFoundHandler } from './lib/errors'
 import { requestLogger } from './lib/logger'
 import { env } from './lib/env'
 import { adminPostsRouter } from './routes/admin/posts'
+import { publicPostsRouter } from './routes/public/posts'
 
 const app = new Hono()
 
@@ -46,6 +47,7 @@ app.notFound(notFoundHandler)
 const routes = app
   .route('/api', api)
   .route('/api/admin/posts', adminPostsRouter)
+  .route('/api/posts', publicPostsRouter)
 
 export type AppType = typeof routes
 
