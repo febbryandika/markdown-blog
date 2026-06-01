@@ -16,6 +16,9 @@ function RootLayout() {
         <Link to="/" className="font-semibold text-foreground hover:text-primary">
           My Project
         </Link>
+        <Link to="/blog" className="text-sm text-muted-foreground hover:text-foreground">
+          Blog
+        </Link>
         <div className="ml-auto flex items-center gap-4">
           <Link
             to="/login"
