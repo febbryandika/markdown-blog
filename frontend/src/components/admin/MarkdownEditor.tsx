@@ -20,12 +20,17 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
     <div className="grid gap-4 lg:grid-cols-2">
       {/* Write pane */}
       <div className="rounded-lg border bg-card">
+        <div className="border-b px-4 py-2">
+          <label htmlFor={id} className="text-xs font-medium text-muted-foreground">
+            Write
+          </label>
+        </div>
         <textarea
           id={id}
           value={value}
           onChange={handleChange}
-          aria-label="Markdown content"
           placeholder="Write your post in Markdown…"
+          spellCheck={false}
           className="min-h-[60vh] w-full resize-y bg-transparent p-4 font-mono text-sm leading-relaxed focus-visible:outline-none"
         />
       </div>
