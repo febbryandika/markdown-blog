@@ -7,6 +7,7 @@ import { requestLogger } from './lib/logger'
 import { env } from './lib/env'
 import { adminPostsRouter } from './routes/admin/posts'
 import { publicPostsRouter } from './routes/public/posts'
+import { feedRouter } from './routes/public/feed'
 
 const app = new Hono()
 
@@ -48,6 +49,7 @@ const routes = app
   .route('/api', api)
   .route('/api/admin/posts', adminPostsRouter)
   .route('/api/posts', publicPostsRouter)
+  .route('/feed', feedRouter)
 
 export type AppType = typeof routes
 
