@@ -18,6 +18,13 @@ function AdminLayout() {
           Dashboard
         </Link>
         <Link
+          to="/admin/posts/new"
+          className="text-sm font-medium hover:text-primary transition-colors"
+          activeProps={{ className: 'text-primary' }}
+        >
+          New post
+        </Link>
+        <Link
           to="/"
           className="text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
