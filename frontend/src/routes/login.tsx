@@ -1,25 +1,37 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 import { authClient } from '@/lib/auth-client'
+import { loginSchema } from '@/lib/auth-schema'
+import type { LoginInput } from '@/lib/auth-schema'
 
 export const Route = createFileRoute('/login')({
   component: LoginPage,
 })
 
+type FieldErrors = Partial<Record<keyof LoginInput, string[]>>
+
 function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+
+    const result = loginSchema.safeParse({ email, password })
+    if (!result.success) {
+      setFieldErrors(result.error.flatten().fieldErrors)
+      return
+    }
+    setFieldErrors({})
     setLoading(true)
 
     try {
-      await authClient.signIn.email({ email, password })
+      await authClient.signIn.email(result.data)
       router.navigate({ to: '/' })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
@@ -48,11 +60,17 @@ function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               autoComplete="email"
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              aria-invalid={!!fieldErrors.email}
+              aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring aria-invalid:border-destructive"
               placeholder="you@example.com"
             />
+            {fieldErrors.email && (
+              <p id="email-error" className="text-xs text-destructive">
+                {fieldErrors.email[0]}
+              </p>
+            )}
           </div>
 
           <div className="space-y-1.5">
@@ -64,11 +82,17 @@ function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
               autoComplete="current-password"
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              aria-invalid={!!fieldErrors.password}
+              aria-describedby={fieldErrors.password ? 'password-error' : undefined}
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring aria-invalid:border-destructive"
               placeholder="••••••••"
             />
+            {fieldErrors.password && (
+              <p id="password-error" className="text-xs text-destructive">
+                {fieldErrors.password[0]}
+              </p>
+            )}
           </div>
 
           {error && (
