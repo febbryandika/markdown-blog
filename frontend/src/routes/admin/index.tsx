@@ -7,6 +7,7 @@ import { StatusBadge } from '@/components/StatusBadge'
 import { Pagination } from '@/components/Pagination'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { AdminTableSkeleton } from '@/components/Skeleton'
+import { EmptyState } from '@/components/EmptyState'
 import { formatDate } from '@/lib/utils'
 
 const PAGE_SIZE = 10
@@ -61,7 +62,11 @@ function AdminPage() {
         />
       )}
 
-      {!isLoading && !isError && data && (
+      {!isLoading && !isError && data && data.length === 0 && (
+        <EmptyState message="No posts yet." hint="Create your first post to get started." />
+      )}
+
+      {!isLoading && !isError && data && data.length > 0 && (
         <>
           <div className="overflow-x-auto rounded-lg border">
             <table className="w-full text-sm">
