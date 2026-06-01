@@ -1,6 +1,5 @@
-import { createFileRoute, Link, Outlet, useRouter } from '@tanstack/react-router'
+import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
 import { requireAuth } from '@/lib/auth'
-import { authClient } from '@/lib/auth-client'
 
 export const Route = createFileRoute('/admin')({
   beforeLoad: ({ location }) => requireAuth(location.href),
@@ -8,13 +7,6 @@ export const Route = createFileRoute('/admin')({
 })
 
 function AdminLayout() {
-  const router = useRouter()
-
-  async function handleSignOut() {
-    await authClient.signOut()
-    router.navigate({ to: '/' })
-  }
-
   return (
     <div>
       <nav aria-label="Admin navigation" className="mb-6 flex items-center gap-4 border-b pb-4">
@@ -31,13 +23,6 @@ function AdminLayout() {
         >
           View site
         </Link>
-        <button
-          type="button"
-          onClick={handleSignOut}
-          className="ml-auto text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          Sign out
-        </button>
       </nav>
       <Outlet />
     </div>
