@@ -6,6 +6,7 @@ import { ErrorState } from '@/components/ErrorState'
 import { StatusBadge } from '@/components/StatusBadge'
 import { Pagination } from '@/components/Pagination'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
+import { AdminTableSkeleton } from '@/components/Skeleton'
 import { formatDate } from '@/lib/utils'
 
 const PAGE_SIZE = 10
@@ -51,9 +52,7 @@ function AdminPage() {
         </div>
       </header>
 
-      {isLoading && (
-        <p className="text-sm text-muted-foreground py-10 text-center">Loading posts…</p>
-      )}
+      {isLoading && <AdminTableSkeleton />}
 
       {isError && (
         <ErrorState
