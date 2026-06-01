@@ -8,6 +8,7 @@ import { Pagination } from '@/components/Pagination'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { AdminTableSkeleton } from '@/components/Skeleton'
 import { EmptyState } from '@/components/EmptyState'
+import { Table, THead, TBody, TR, TH, TD } from '@/components/admin/Table'
 import { formatDate } from '@/lib/utils'
 
 const PAGE_SIZE = 10
@@ -68,43 +69,39 @@ function AdminPage() {
 
       {!isLoading && !isError && data && data.length > 0 && (
         <>
-          <div className="overflow-x-auto rounded-lg border">
-            <table className="w-full text-sm">
-              <caption className="sr-only">Admin posts list</caption>
-              <thead className="bg-muted/50">
-                <tr>
-                  <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground">Title</th>
-                  <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground">Status</th>
-                  <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground whitespace-nowrap">Updated</th>
-                  <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground whitespace-nowrap">Published</th>
-                  <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground">
-                    <span className="sr-only">Actions</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {pagePosts.map((post) => (
-                  <tr key={post.id} className="bg-card hover:bg-muted/30 transition-colors">
-                    <td className="px-4 py-3 font-medium max-w-xs truncate">{post.title}</td>
-                    <td className="px-4 py-3"><StatusBadge status={post.status} /></td>
-                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{formatDate(post.updatedAt)}</td>
-                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">
-                      {post.publishedAt ? formatDate(post.publishedAt) : '—'}
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <button
-                        type="button"
-                        onClick={() => setPendingDeleteId(post.id)}
-                        className="rounded px-3 py-1 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Table>
+            <caption className="sr-only">Admin posts list</caption>
+            <THead>
+              <tr>
+                <TH>Title</TH>
+                <TH>Status</TH>
+                <TH className="whitespace-nowrap">Updated</TH>
+                <TH className="whitespace-nowrap">Published</TH>
+                <TH><span className="sr-only">Actions</span></TH>
+              </tr>
+            </THead>
+            <TBody>
+              {pagePosts.map((post) => (
+                <TR key={post.id}>
+                  <TD className="font-medium max-w-xs truncate">{post.title}</TD>
+                  <TD><StatusBadge status={post.status} /></TD>
+                  <TD className="text-muted-foreground whitespace-nowrap">{formatDate(post.updatedAt)}</TD>
+                  <TD className="text-muted-foreground whitespace-nowrap">
+                    {post.publishedAt ? formatDate(post.publishedAt) : '—'}
+                  </TD>
+                  <TD className="text-right">
+                    <button
+                      type="button"
+                      onClick={() => setPendingDeleteId(post.id)}
+                      className="rounded px-3 py-1 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
+                    >
+                      Delete
+                    </button>
+                  </TD>
+                </TR>
+              ))}
+            </TBody>
+          </Table>
 
           <Pagination page={page} totalPages={totalPages} to="/admin/" />
 
