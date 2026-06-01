@@ -47,11 +47,17 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
     preview.refetch()
   }
 
+  const emptyState = (
+    <div className="flex h-full items-center justify-center">
+      <p className="text-sm text-muted-foreground">Nothing to preview yet.</p>
+    </div>
+  )
+
   return (
     <>
       <EditorToolbar view={mobileView} onViewChange={setMobileView} />
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
         {/* Write pane — focus-within rings the pane when the textarea has focus */}
         <div
           className={cn(
@@ -88,9 +94,9 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
               <span className="text-xs text-muted-foreground" aria-hidden="true">Updating…</span>
             )}
           </div>
-          <div className="min-h-[60vh] p-4" aria-busy={preview.isFetching}>
+          <div className="h-[60vh] overflow-auto p-4" aria-busy={preview.isFetching}>
             {!hasPreviewContent ? (
-              <p className="text-sm text-muted-foreground">Nothing to preview yet.</p>
+              emptyState
             ) : preview.isError ? (
               <ErrorState message="Couldn't render the preview." onRetry={handleRetryPreview} />
             ) : preview.isLoading ? (
@@ -103,7 +109,7 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
             ) : preview.data ? (
               <PostBody html={preview.data.html} />
             ) : (
-              <p className="text-sm text-muted-foreground">Nothing to preview yet.</p>
+              emptyState
             )}
           </div>
         </div>
