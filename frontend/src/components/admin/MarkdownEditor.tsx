@@ -1,4 +1,6 @@
 import type { ChangeEvent } from 'react'
+import { usePreview } from '@/hooks/admin-posts'
+import { PostBody } from '@/components/PostBody'
 
 interface MarkdownEditorProps {
   value: string
@@ -9,9 +11,12 @@ interface MarkdownEditorProps {
 
 /**
  * Controlled Markdown editor. The parent owns the content (`value`/`onChange`);
- * preview state stays internal (added in later tasks).
+ * the live preview state stays internal. Preview HTML is rendered server-side
+ * (sanitized) via the shared `PostBody`, so it matches published output.
  */
 export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: MarkdownEditorProps) {
+  const preview = usePreview(value)
+
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     onChange(event.target.value)
   }
@@ -35,9 +40,18 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
         />
       </div>
 
-      {/* Preview pane (rendered preview wired up in a later task) */}
+      {/* Preview pane */}
       <div className="rounded-lg border bg-card">
-        <div className="min-h-[60vh] p-4 text-sm text-muted-foreground">Preview</div>
+        <div className="border-b px-4 py-2">
+          <span className="text-xs font-medium text-muted-foreground">Preview</span>
+        </div>
+        <div className="min-h-[60vh] p-4">
+          {preview.data ? (
+            <PostBody html={preview.data.html} />
+          ) : (
+            <p className="text-sm text-muted-foreground">Nothing to preview yet.</p>
+          )}
+        </div>
       </div>
     </div>
   )

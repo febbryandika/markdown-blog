@@ -16,6 +16,20 @@ export function useAdminPosts() {
   })
 }
 
+export function usePreview(content: string) {
+  return useQuery({
+    queryKey: ['preview', content],
+    queryFn: async () => {
+      const res = await client.api.admin.posts.preview.$post({ json: { content } })
+      if (!res.ok) throw new Error('Failed to render preview')
+      return res.json()
+    },
+    // Skip empty content; preview HTML for a given input is deterministic, so cache it forever.
+    enabled: content.trim().length > 0,
+    staleTime: Infinity,
+  })
+}
+
 export function useDeletePost() {
   const queryClient = useQueryClient()
 
