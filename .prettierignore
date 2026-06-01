@@ -1,0 +1,6 @@
+node_modules
+dist
+build
+bun.lock
+frontend/src/routeTree.gen.ts
+backend/drizzle
