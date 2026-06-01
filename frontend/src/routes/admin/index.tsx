@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { useAdminPosts } from '@/hooks/admin-posts'
 import { ErrorState } from '@/components/ErrorState'
+import { StatusBadge } from '@/components/StatusBadge'
 import { formatDate } from '@/lib/utils'
 
 const searchSchema = z.object({
@@ -61,7 +62,7 @@ function AdminPage() {
               {data.map((post) => (
                 <tr key={post.id} className="bg-card hover:bg-muted/30 transition-colors">
                   <td className="px-4 py-3 font-medium max-w-xs truncate">{post.title}</td>
-                  <td className="px-4 py-3 capitalize text-muted-foreground">{post.status}</td>
+                  <td className="px-4 py-3"><StatusBadge status={post.status} /></td>
                   <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{formatDate(post.updatedAt)}</td>
                   <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">
                     {post.publishedAt ? formatDate(post.publishedAt) : '—'}
