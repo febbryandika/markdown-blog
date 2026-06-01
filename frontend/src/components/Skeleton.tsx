@@ -52,3 +52,32 @@ export function PostDetailSkeleton() {
     </div>
   )
 }
+
+export function AdminTableSkeleton() {
+  return (
+    <div className="overflow-x-auto rounded-lg border">
+      <table className="w-full text-sm" aria-busy="true" aria-label="Loading posts">
+        <thead className="bg-muted/50">
+          <tr>
+            {['Title', 'Status', 'Updated', 'Published', ''].map((col) => (
+              <th key={col} scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground">
+                {col}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <tr key={i} className="bg-card">
+              <td className="px-4 py-3"><Skeleton className="h-4 w-48" /></td>
+              <td className="px-4 py-3"><Skeleton className="h-5 w-20 rounded-full" /></td>
+              <td className="px-4 py-3"><Skeleton className="h-4 w-24" /></td>
+              <td className="px-4 py-3"><Skeleton className="h-4 w-24" /></td>
+              <td className="px-4 py-3"><Skeleton className="h-6 w-12 ml-auto" /></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
