@@ -1,15 +1,15 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { logger } from 'hono/logger'
 import { auth } from './lib/auth'
 import { requireAuth } from './lib/middleware'
 import { handleError, notFoundHandler } from './lib/errors'
+import { requestLogger } from './lib/logger'
 import { env } from './lib/env'
 
 const app = new Hono()
 
 // Middleware
-app.use('*', logger())
+app.use('*', requestLogger)
 app.use(
   '*',
   cors({
