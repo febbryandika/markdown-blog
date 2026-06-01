@@ -25,7 +25,21 @@ export function useDeletePost() {
       if (!res.ok) throw new Error('Failed to delete post')
       return res.json()
     },
-    onSuccess: () => {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ['admin-posts'] })
+      const snapshot = queryClient.getQueryData<AdminPostsResponse>(['admin-posts'])
+      queryClient.setQueryData<AdminPostsResponse>(
+        ['admin-posts'],
+        (prev) => prev?.filter((p) => p.id !== id) ?? [],
+      )
+      return { snapshot }
+    },
+    onError: (_err, _id, context) => {
+      if (context?.snapshot) {
+        queryClient.setQueryData(['admin-posts'], context.snapshot)
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-posts'] })
     },
   })
