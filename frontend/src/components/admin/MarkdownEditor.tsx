@@ -1,6 +1,10 @@
 import type { ChangeEvent } from 'react'
 import { usePreview } from '@/hooks/admin-posts'
+import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { PostBody } from '@/components/PostBody'
+
+/** Debounce preview requests to avoid a round-trip on every keystroke (SPEC §10). */
+const PREVIEW_DEBOUNCE_MS = 500
 
 interface MarkdownEditorProps {
   value: string
@@ -15,7 +19,8 @@ interface MarkdownEditorProps {
  * (sanitized) via the shared `PostBody`, so it matches published output.
  */
 export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: MarkdownEditorProps) {
-  const preview = usePreview(value)
+  const debouncedValue = useDebouncedValue(value, PREVIEW_DEBOUNCE_MS)
+  const preview = usePreview(debouncedValue)
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     onChange(event.target.value)
