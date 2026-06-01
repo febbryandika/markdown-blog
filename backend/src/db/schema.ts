@@ -1,4 +1,6 @@
-import { pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, boolean, integer, index } from 'drizzle-orm/pg-core'
+import { sql } from 'drizzle-orm'
+import { createId } from '@paralleldrive/cuid2'
 
 // ── better-auth required tables ──────────────────────────────────────────────
 // Do NOT rename these tables or columns — better-auth expects this exact shape.
@@ -51,12 +53,28 @@ export const verification = pgTable('verification', {
 })
 
 // ── Your app tables go below ──────────────────────────────────────────────────
-// Example:
-// import { createId } from '@paralleldrive/cuid2'
-//
-// export const posts = pgTable('posts', {
-//   id:        text('id').primaryKey().$defaultFn(() => createId()),
-//   userId:    text('user_id').notNull().references(() => user.id),
-//   title:     text('title').notNull(),
-//   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-// })
+
+export const categories = pgTable('categories', {
+  id:   text('id').primaryKey().$defaultFn(() => createId()),
+  name: text('name').notNull().unique(),
+  slug: text('slug').notNull().unique(),
+})
+
+export const posts = pgTable('posts', {
+  id:           text('id').primaryKey().$defaultFn(() => createId()),
+  title:        text('title').notNull(),
+  slug:         text('slug').notNull().unique(),
+  excerpt:      text('excerpt'),
+  content:      text('content').notNull().default(''),
+  coverImage:   text('cover_image'),
+  status:       text('status', { enum: ['draft', 'published'] }).notNull().default('draft'),
+  readingTime:  integer('reading_time'),
+  categoryId:   text('category_id').references(() => categories.id, { onDelete: 'set null' }),
+  tags:         text('tags').array().notNull().default(sql`'{}'::text[]`),
+  publishedAt:  timestamp('published_at', { withTimezone: true }),
+  createdAt:    timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt:    timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (t) => [
+  index('idx_post_status').on(t.status),
+  index('idx_post_slug').on(t.slug),
+])
