@@ -3,6 +3,7 @@ import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { auth } from './lib/auth'
 import { requireAuth } from './lib/middleware'
+import { handleError, notFoundHandler } from './lib/errors'
 import { env } from './lib/env'
 
 const app = new Hono()
@@ -37,6 +38,10 @@ api.get('/me', (c) => {
 })
 
 app.route('/api', api)
+
+// Structured JSON error handling
+app.onError(handleError)
+app.notFound(notFoundHandler)
 
 // Export for RPC type inference
 export type AppType = typeof app
