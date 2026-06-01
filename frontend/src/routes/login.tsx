@@ -75,7 +75,7 @@ function LoginPage() {
               id="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => { setEmail(e.target.value); setError('') }}
               autoComplete="email"
               disabled={loading}
               aria-invalid={!!fieldErrors.email}
@@ -98,7 +98,7 @@ function LoginPage() {
               id="password"
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => { setPassword(e.target.value); setError('') }}
               autoComplete="current-password"
               disabled={loading}
               aria-invalid={!!fieldErrors.password}
@@ -114,9 +114,12 @@ function LoginPage() {
           </div>
 
           {error && (
-            <p className="text-sm text-destructive" role="alert">
+            <div
+              role="alert"
+              className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2.5 text-sm text-destructive"
+            >
               {error}
-            </p>
+            </div>
           )}
 
           <button
