@@ -2,6 +2,7 @@ import type { Context } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import type { ContentfulStatusCode } from 'hono/utils/http-status'
 import { ZodError } from 'zod'
+import { logError } from './logger'
 
 export const ErrorCode = {
   VALIDATION_ERROR: 'VALIDATION_ERROR',
@@ -82,7 +83,7 @@ export function handleError(err: Error, c: Context) {
     return errorResponse(c, err.status, code, err.message)
   }
 
-  console.error('Unhandled error:', err)
+  logError({ message: err.message, stack: err.stack })
   return errorResponse(c, 500, ErrorCode.INTERNAL_ERROR, 'Internal server error')
 }
 

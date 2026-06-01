@@ -1,15 +1,18 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { logger } from 'hono/logger'
 import { auth } from './lib/auth'
 import { requireAuth } from './lib/middleware'
 import { handleError, notFoundHandler } from './lib/errors'
+import { requestLogger } from './lib/logger'
 import { env } from './lib/env'
+import { adminPostsRouter } from './routes/admin/posts'
+import { publicPostsRouter } from './routes/public/posts'
+import { feedRouter } from './routes/public/feed'
 
 const app = new Hono()
 
 // Middleware
-app.use('*', logger())
+app.use('*', requestLogger)
 app.use(
   '*',
   cors({
@@ -30,21 +33,25 @@ app.get('/api/health', (c) => c.json({ status: 'ok' }))
 
 // Protected routes example
 const api = new Hono()
-api.use('*', requireAuth)
+api.use('/me', requireAuth)
 
 api.get('/me', (c) => {
   const user = c.get('user')
   return c.json({ user })
 })
 
-app.route('/api', api)
-
 // Structured JSON error handling
 app.onError(handleError)
 app.notFound(notFoundHandler)
 
-// Export for RPC type inference
-export type AppType = typeof app
+// Chain routes for RPC type inference — typeof captures the full route shape
+const routes = app
+  .route('/api', api)
+  .route('/api/admin/posts', adminPostsRouter)
+  .route('/api/posts', publicPostsRouter)
+  .route('/feed', feedRouter)
+
+export type AppType = typeof routes
 
 const port = env.PORT
 console.log(`Server running on http://localhost:${port}`)
