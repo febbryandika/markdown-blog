@@ -3,6 +3,7 @@ import { usePreview } from '@/hooks/admin-posts'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { PostBody } from '@/components/PostBody'
 import { Skeleton } from '@/components/Skeleton'
+import { ErrorState } from '@/components/ErrorState'
 
 /** Debounce preview requests to avoid a round-trip on every keystroke (SPEC §10). */
 const PREVIEW_DEBOUNCE_MS = 500
@@ -22,9 +23,14 @@ interface MarkdownEditorProps {
 export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: MarkdownEditorProps) {
   const debouncedValue = useDebouncedValue(value, PREVIEW_DEBOUNCE_MS)
   const preview = usePreview(debouncedValue)
+  const hasPreviewContent = debouncedValue.trim().length > 0
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     onChange(event.target.value)
+  }
+
+  function handleRetryPreview() {
+    preview.refetch()
   }
 
   return (
@@ -55,7 +61,11 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
           )}
         </div>
         <div className="min-h-[60vh] p-4">
-          {preview.isLoading ? (
+          {!hasPreviewContent ? (
+            <p className="text-sm text-muted-foreground">Nothing to preview yet.</p>
+          ) : preview.isError ? (
+            <ErrorState message="Couldn't render the preview." onRetry={handleRetryPreview} />
+          ) : preview.isLoading ? (
             <div className="flex flex-col gap-3" aria-hidden="true">
               <Skeleton className="h-6 w-2/3" />
               <Skeleton className="h-4 w-full" />

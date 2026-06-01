@@ -29,6 +29,8 @@ export function usePreview(content: string) {
     staleTime: Infinity,
     // Keep the last preview visible while the next one loads — no flicker between keystrokes.
     placeholderData: keepPreviousData,
+    // Surface failures promptly; recovery is via the explicit retry button.
+    retry: false,
   })
 }
 
