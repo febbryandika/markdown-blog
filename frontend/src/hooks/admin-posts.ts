@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { client } from '@/lib/client'
 import type { InferResponseType } from 'hono/client'
 
@@ -13,6 +13,24 @@ export function useAdminPosts() {
       if (!res.ok) throw new Error('Failed to fetch posts')
       return res.json()
     },
+  })
+}
+
+export function usePreview(content: string) {
+  return useQuery({
+    queryKey: ['preview', content],
+    queryFn: async () => {
+      const res = await client.api.admin.posts.preview.$post({ json: { content } })
+      if (!res.ok) throw new Error('Failed to render preview')
+      return res.json()
+    },
+    // Skip empty content; preview HTML for a given input is deterministic, so cache it forever.
+    enabled: content.trim().length > 0,
+    staleTime: Infinity,
+    // Keep the last preview visible while the next one loads — no flicker between keystrokes.
+    placeholderData: keepPreviousData,
+    // Surface failures promptly; recovery is via the explicit retry button.
+    retry: false,
   })
 }
 

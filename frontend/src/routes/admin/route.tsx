@@ -11,11 +11,18 @@ function AdminLayout() {
     <div>
       <nav aria-label="Admin navigation" className="mb-6 flex items-center gap-4 border-b pb-4">
         <Link
-          to="/admin/"
+          to="/admin"
           className="text-sm font-medium hover:text-primary transition-colors"
           activeProps={{ className: 'text-primary' }}
         >
           Dashboard
+        </Link>
+        <Link
+          to="/admin/posts/new"
+          className="text-sm font-medium hover:text-primary transition-colors"
+          activeProps={{ className: 'text-primary' }}
+        >
+          New post
         </Link>
         <Link
           to="/"
