@@ -1,10 +1,23 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
+import { z } from 'zod'
 import { loginSchema } from '@/lib/auth-schema'
 import type { LoginInput } from '@/lib/auth-schema'
 import { signInWithEmail } from '@/lib/auth'
+import { authClient } from '@/lib/auth-client'
+
+const searchSchema = z.object({
+  redirect: z.string().optional(),
+})
 
 export const Route = createFileRoute('/login')({
+  validateSearch: searchSchema,
+  beforeLoad: async ({ search }) => {
+    const { data } = await authClient.getSession()
+    if (data?.session) {
+      throw redirect({ to: search.redirect ?? '/admin' })
+    }
+  },
   component: LoginPage,
 })
 
@@ -12,6 +25,7 @@ type FieldErrors = Partial<Record<keyof LoginInput, string[]>>
 
 function LoginPage() {
   const router = useRouter()
+  const { redirect: redirectTo } = Route.useSearch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
@@ -39,7 +53,7 @@ function LoginPage() {
       return
     }
 
-    router.navigate({ to: '/admin' })
+    router.navigate({ to: redirectTo ?? '/admin' })
   }
 
   return (

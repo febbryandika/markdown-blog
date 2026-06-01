@@ -1,5 +1,17 @@
+import { redirect } from '@tanstack/react-router'
 import { authClient } from './auth-client'
 import type { LoginInput } from './auth-schema'
+
+/** Throws a redirect to /login if no active session. Used in route beforeLoad. */
+export async function requireAuth(redirectTo?: string) {
+  const { data } = await authClient.getSession()
+  if (!data?.session) {
+    throw redirect({
+      to: '/login',
+      search: redirectTo ? { redirect: redirectTo } : undefined,
+    })
+  }
+}
 
 const ERROR_MESSAGES: Record<string, string> = {
   'Invalid email or password': 'Invalid email or password.',
