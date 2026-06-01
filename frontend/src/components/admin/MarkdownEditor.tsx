@@ -2,6 +2,7 @@ import type { ChangeEvent } from 'react'
 import { usePreview } from '@/hooks/admin-posts'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { PostBody } from '@/components/PostBody'
+import { Skeleton } from '@/components/Skeleton'
 
 /** Debounce preview requests to avoid a round-trip on every keystroke (SPEC §10). */
 const PREVIEW_DEBOUNCE_MS = 500
@@ -47,11 +48,21 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
 
       {/* Preview pane */}
       <div className="rounded-lg border bg-card">
-        <div className="border-b px-4 py-2">
+        <div className="flex items-center justify-between border-b px-4 py-2">
           <span className="text-xs font-medium text-muted-foreground">Preview</span>
+          {preview.isFetching && preview.data && (
+            <span className="text-xs text-muted-foreground">Updating…</span>
+          )}
         </div>
         <div className="min-h-[60vh] p-4">
-          {preview.data ? (
+          {preview.isLoading ? (
+            <div className="flex flex-col gap-3" aria-hidden="true">
+              <Skeleton className="h-6 w-2/3" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-4/5" />
+            </div>
+          ) : preview.data ? (
             <PostBody html={preview.data.html} />
           ) : (
             <p className="text-sm text-muted-foreground">Nothing to preview yet.</p>
