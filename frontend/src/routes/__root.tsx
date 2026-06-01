@@ -1,5 +1,6 @@
-import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
+import { createRootRouteWithContext, Link, Outlet, useRouter } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
+import { useSession, authClient } from '@/lib/auth-client'
 
 interface RouterContext {
   queryClient: QueryClient
@@ -8,6 +9,41 @@ interface RouterContext {
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootLayout,
 })
+
+function NavAuth() {
+  const { data, isPending } = useSession()
+  const router = useRouter()
+
+  if (isPending) {
+    return <span className="h-4 w-16 animate-pulse rounded bg-muted" aria-hidden="true" />
+  }
+
+  if (data?.session) {
+    return (
+      <>
+        <Link to="/admin" className="text-sm text-muted-foreground hover:text-foreground">
+          Admin
+        </Link>
+        <button
+          type="button"
+          className="text-sm text-muted-foreground hover:text-foreground"
+          onClick={async () => {
+            await authClient.signOut()
+            router.navigate({ to: '/' })
+          }}
+        >
+          Sign out
+        </button>
+      </>
+    )
+  }
+
+  return (
+    <Link to="/login" className="text-sm text-muted-foreground hover:text-foreground">
+      Login
+    </Link>
+  )
+}
 
 function RootLayout() {
   return (
@@ -20,12 +56,7 @@ function RootLayout() {
           Blog
         </Link>
         <div className="ml-auto flex items-center gap-4">
-          <Link
-            to="/login"
-            className="text-sm text-muted-foreground hover:text-foreground"
-          >
-            Login
-          </Link>
+          <NavAuth />
         </div>
       </nav>
       <main className="container mx-auto px-6 py-8">
