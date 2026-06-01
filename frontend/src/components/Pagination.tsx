@@ -18,7 +18,8 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
         <Link
           to={to}
           params={params}
-          search={{ page: page - 1 }}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          search={{ page: page - 1 } as any}
           aria-label="Go to previous page"
           className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
         >
@@ -42,7 +43,8 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
         <Link
           to={to}
           params={params}
-          search={{ page: page + 1 }}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          search={{ page: page + 1 } as any}
           aria-label="Go to next page"
           className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
         >

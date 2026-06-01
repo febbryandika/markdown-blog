@@ -10,7 +10,7 @@ export function usePosts({ page = 1, tag }: { page?: number; tag?: string } = {}
   return useQuery({
     queryKey: ['posts', { page, tag }],
     queryFn: async () => {
-      const res = await client.api.posts.$get({ query: { page, tag } })
+      const res = await client.api.posts.$get({ query: { page: String(page), tag } })
       if (!res.ok) throw new Error('Failed to fetch posts')
       return res.json()
     },
