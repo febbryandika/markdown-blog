@@ -29,5 +29,7 @@ export function usePost(slug: string) {
       return res.json()
     },
     enabled: !!slug,
+    // Don't retry 404s — they're not transient
+    retry: (_, error) => !(error instanceof Error && error.message === 'NOT_FOUND'),
   })
 }

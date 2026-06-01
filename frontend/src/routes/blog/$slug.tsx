@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { usePost } from '@/hooks/posts'
 import { PostBody } from '@/components/PostBody'
 import { TagBadge } from '@/components/TagBadge'
@@ -18,7 +18,12 @@ function PostPage() {
 
   if (isError) {
     if (error instanceof Error && error.message === 'NOT_FOUND') {
-      throw notFound()
+      return (
+        <div className="flex flex-col items-center justify-center py-20 gap-3 text-center">
+          <p className="text-lg font-medium">Post not found</p>
+          <Link to="/blog/" className="text-sm text-primary hover:underline">← Back to blog</Link>
+        </div>
+      )
     }
     return (
       <ErrorState
