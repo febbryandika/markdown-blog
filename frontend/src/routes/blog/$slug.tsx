@@ -21,7 +21,7 @@ function PostPage() {
       return (
         <div className="flex flex-col items-center justify-center py-20 gap-3 text-center">
           <p className="text-lg font-medium">Post not found</p>
-          <Link to="/blog/" className="text-sm text-primary hover:underline">← Back to blog</Link>
+          <Link to="/blog" className="text-sm text-primary hover:underline">← Back to blog</Link>
         </div>
       )
     }
