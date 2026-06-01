@@ -43,15 +43,35 @@ function AdminPage() {
       )}
 
       {!isLoading && !isError && data && (
-        <ul className="flex flex-col gap-2">
-          {data.map((post) => (
-            <li key={post.id} className="rounded-md border bg-card px-4 py-3 text-sm flex items-center gap-4">
-              <span className="flex-1 font-medium truncate">{post.title}</span>
-              <span className="text-muted-foreground capitalize">{post.status}</span>
-              <span className="text-muted-foreground">{formatDate(post.updatedAt)}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="overflow-x-auto rounded-lg border">
+          <table className="w-full text-sm">
+            <caption className="sr-only">Admin posts list</caption>
+            <thead className="bg-muted/50">
+              <tr>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground">Title</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground">Status</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground whitespace-nowrap">Updated</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground whitespace-nowrap">Published</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-muted-foreground">
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {data.map((post) => (
+                <tr key={post.id} className="bg-card hover:bg-muted/30 transition-colors">
+                  <td className="px-4 py-3 font-medium max-w-xs truncate">{post.title}</td>
+                  <td className="px-4 py-3 capitalize text-muted-foreground">{post.status}</td>
+                  <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{formatDate(post.updatedAt)}</td>
+                  <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">
+                    {post.publishedAt ? formatDate(post.publishedAt) : '—'}
+                  </td>
+                  <td className="px-4 py-3" />
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </section>
   )
