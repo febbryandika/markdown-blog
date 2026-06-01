@@ -4,9 +4,8 @@ import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { PostBody } from '@/components/PostBody'
 import { Skeleton } from '@/components/Skeleton'
 import { ErrorState } from '@/components/ErrorState'
+import { EditorToolbar, type EditorView } from '@/components/admin/EditorToolbar'
 import { cn } from '@/lib/utils'
-
-type EditorView = 'write' | 'preview'
 
 /** Debounce preview requests to avoid a round-trip on every keystroke (SPEC §10). */
 const PREVIEW_DEBOUNCE_MS = 500
@@ -50,35 +49,7 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
 
   return (
     <>
-      {/* Mobile-only view switch; both panes show side-by-side at lg+ */}
-      <div className="mb-3 flex gap-1 lg:hidden" role="group" aria-label="Editor view">
-        <button
-          type="button"
-          onClick={() => setMobileView('write')}
-          aria-pressed={mobileView === 'write'}
-          className={cn(
-            'rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            mobileView === 'write'
-              ? 'bg-primary text-primary-foreground'
-              : 'text-muted-foreground hover:text-foreground',
-          )}
-        >
-          Write
-        </button>
-        <button
-          type="button"
-          onClick={() => setMobileView('preview')}
-          aria-pressed={mobileView === 'preview'}
-          className={cn(
-            'rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            mobileView === 'preview'
-              ? 'bg-primary text-primary-foreground'
-              : 'text-muted-foreground hover:text-foreground',
-          )}
-        >
-          Preview
-        </button>
-      </div>
+      <EditorToolbar view={mobileView} onViewChange={setMobileView} />
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Write pane — focus-within rings the pane when the textarea has focus */}
