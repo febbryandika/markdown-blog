@@ -5,6 +5,7 @@ import { requireAuth } from './lib/middleware'
 import { handleError, notFoundHandler } from './lib/errors'
 import { requestLogger } from './lib/logger'
 import { env } from './lib/env'
+import { adminPostsRouter } from './routes/admin/posts'
 
 const app = new Hono()
 
@@ -37,14 +38,16 @@ api.get('/me', (c) => {
   return c.json({ user })
 })
 
-app.route('/api', api)
-
 // Structured JSON error handling
 app.onError(handleError)
 app.notFound(notFoundHandler)
 
-// Export for RPC type inference
-export type AppType = typeof app
+// Chain routes for RPC type inference — typeof captures the full route shape
+const routes = app
+  .route('/api', api)
+  .route('/api/admin/posts', adminPostsRouter)
+
+export type AppType = typeof routes
 
 const port = env.PORT
 console.log(`Server running on http://localhost:${port}`)
