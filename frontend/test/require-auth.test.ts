@@ -15,7 +15,7 @@ describe('requireAuth (admin route guard)', () => {
 
     const thrown = await requireAuth('/admin').then(
       () => undefined,
-      (err: unknown) => err
+      (err: unknown) => err,
     )
 
     expect(isRedirect(thrown)).toBe(true)
@@ -26,7 +26,9 @@ describe('requireAuth (admin route guard)', () => {
   })
 
   it('does not redirect when a session exists', async () => {
-    getSession.mockResolvedValue({ data: { session: { id: 's1' }, user: { id: 'u1' } } })
+    getSession.mockResolvedValue({
+      data: { session: { id: 's1' }, user: { id: 'u1' } },
+    })
 
     await expect(requireAuth('/admin')).resolves.toBeUndefined()
   })

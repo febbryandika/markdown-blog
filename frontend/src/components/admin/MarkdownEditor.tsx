@@ -4,7 +4,10 @@ import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { PostBody } from '@/components/PostBody'
 import { Skeleton } from '@/components/Skeleton'
 import { ErrorState } from '@/components/ErrorState'
-import { EditorToolbar, type EditorView } from '@/components/admin/EditorToolbar'
+import {
+  EditorToolbar,
+  type EditorView,
+} from '@/components/admin/EditorToolbar'
 import { cn } from '@/lib/utils'
 
 /** Debounce preview requests to avoid a round-trip on every keystroke (SPEC §10). */
@@ -22,7 +25,11 @@ interface MarkdownEditorProps {
  * the live preview state stays internal. Preview HTML is rendered server-side
  * (sanitized) via the shared `PostBody`, so it matches published output.
  */
-export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: MarkdownEditorProps) {
+export function MarkdownEditor({
+  value,
+  onChange,
+  id = 'markdown-content',
+}: MarkdownEditorProps) {
   const [mobileView, setMobileView] = useState<EditorView>('write')
   const debouncedValue = useDebouncedValue(value, PREVIEW_DEBOUNCE_MS)
   const preview = usePreview(debouncedValue)
@@ -66,7 +73,10 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
           )}
         >
           <div className="border-b px-4 py-2">
-            <label htmlFor={id} className="text-xs font-medium text-muted-foreground">
+            <label
+              htmlFor={id}
+              className="text-xs font-medium text-muted-foreground"
+            >
               Write
             </label>
           </div>
@@ -89,16 +99,29 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
           )}
         >
           <div className="flex items-center justify-between border-b px-4 py-2">
-            <span className="text-xs font-medium text-muted-foreground">Preview</span>
+            <span className="text-xs font-medium text-muted-foreground">
+              Preview
+            </span>
             {preview.isFetching && preview.data && (
-              <span className="text-xs text-muted-foreground" aria-hidden="true">Updating…</span>
+              <span
+                className="text-xs text-muted-foreground"
+                aria-hidden="true"
+              >
+                Updating…
+              </span>
             )}
           </div>
-          <div className="h-[60vh] overflow-auto p-4" aria-busy={preview.isFetching}>
+          <div
+            className="h-[60vh] overflow-auto p-4"
+            aria-busy={preview.isFetching}
+          >
             {!hasPreviewContent ? (
               emptyState
             ) : preview.isError ? (
-              <ErrorState message="Couldn't render the preview." onRetry={handleRetryPreview} />
+              <ErrorState
+                message="Couldn't render the preview."
+                onRetry={handleRetryPreview}
+              />
             ) : preview.isLoading ? (
               <div className="flex flex-col gap-3" aria-hidden="true">
                 <Skeleton className="h-6 w-2/3" />
@@ -116,7 +139,9 @@ export function MarkdownEditor({ value, onChange, id = 'markdown-content' }: Mar
       </div>
 
       {/* Polite status updates for screen readers */}
-      <p role="status" aria-live="polite" className="sr-only">{previewStatus}</p>
+      <p role="status" aria-live="polite" className="sr-only">
+        {previewStatus}
+      </p>
     </>
   )
 }

@@ -8,10 +8,10 @@ import { errorResponse, ErrorCode } from './errors'
  * failure. Drop-in replacement for `zValidator`; routes get typed
  * `c.req.valid(target)` access. Example: `validate('json', createPostSchema)`.
  */
-export function validate<T extends ZodSchema, Target extends keyof ValidationTargets>(
-  target: Target,
-  schema: T
-) {
+export function validate<
+  T extends ZodSchema,
+  Target extends keyof ValidationTargets,
+>(target: Target, schema: T) {
   return zValidator(target, schema, (result, c) => {
     if (!result.success) {
       const first = result.error.issues[0]

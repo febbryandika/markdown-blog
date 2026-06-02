@@ -32,7 +32,7 @@ export const publicPostsRouter = new Hono()
 
     const whereClause = and(
       eq(posts.status, 'published'),
-      tag ? sql`${tag} = ANY(${posts.tags})` : undefined
+      tag ? sql`${tag} = ANY(${posts.tags})` : undefined,
     )
 
     const [rows, [{ value: total }]] = await Promise.all([
@@ -78,8 +78,8 @@ export const publicPostsRouter = new Hono()
               and(
                 eq(posts.status, 'published'),
                 isNotNull(posts.publishedAt),
-                lt(posts.publishedAt, post.publishedAt)
-              )
+                lt(posts.publishedAt, post.publishedAt),
+              ),
             )
             .orderBy(desc(posts.publishedAt))
             .limit(1)
@@ -93,8 +93,8 @@ export const publicPostsRouter = new Hono()
               and(
                 eq(posts.status, 'published'),
                 isNotNull(posts.publishedAt),
-                gt(posts.publishedAt, post.publishedAt)
-              )
+                gt(posts.publishedAt, post.publishedAt),
+              ),
             )
             .orderBy(asc(posts.publishedAt))
             .limit(1)

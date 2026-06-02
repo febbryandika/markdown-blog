@@ -23,7 +23,9 @@ function mapAuthError(message: string | undefined): string {
   return ERROR_MESSAGES[message] ?? 'Invalid email or password.'
 }
 
-export async function signInWithEmail(input: LoginInput): Promise<{ error: string | null }> {
+export async function signInWithEmail(
+  input: LoginInput,
+): Promise<{ error: string | null }> {
   try {
     const { error } = await authClient.signIn.email(input)
     if (error) return { error: mapAuthError(error.message) }

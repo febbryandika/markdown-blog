@@ -51,8 +51,15 @@ export function ConfirmDialog({
       aria-describedby="confirm-dialog-desc"
       className="rounded-lg border bg-background p-6 shadow-lg backdrop:bg-black/50 w-full max-w-sm mx-auto"
     >
-      <h2 id="confirm-dialog-title" className="text-base font-semibold">{title}</h2>
-      <p id="confirm-dialog-desc" className="mt-2 text-sm text-muted-foreground">{description}</p>
+      <h2 id="confirm-dialog-title" className="text-base font-semibold">
+        {title}
+      </h2>
+      <p
+        id="confirm-dialog-desc"
+        className="mt-2 text-sm text-muted-foreground"
+      >
+        {description}
+      </p>
 
       <div className="mt-6 flex justify-end gap-3">
         <button

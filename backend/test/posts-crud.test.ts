@@ -10,10 +10,19 @@ describe('admin posts CRUD', () => {
 
   it('creates, reads, updates, and deletes a post', async () => {
     // Create
-    const createRes = await req(app, 'POST', base, buildPostInput({ title: 'My First Post', status: 'published' }))
+    const createRes = await req(
+      app,
+      'POST',
+      base,
+      buildPostInput({ title: 'My First Post', status: 'published' }),
+    )
     expect(createRes.status).toBe(201)
     const created = await createRes.json()
-    expect(created).toMatchObject({ title: 'My First Post', slug: 'my-first-post', status: 'published' })
+    expect(created).toMatchObject({
+      title: 'My First Post',
+      slug: 'my-first-post',
+      status: 'published',
+    })
     expect(created.id).toBeTruthy()
     expect(created.readingTime).toBe(1)
     expect(created.publishedAt).toBeTruthy() // published posts get a publishedAt
@@ -32,7 +41,9 @@ describe('admin posts CRUD', () => {
     expect((await getRes.json()).id).toBe(id)
 
     // Update — slug re-derives from the new title
-    const updateRes = await req(app, 'PUT', `${base}/${id}`, { title: 'Updated Title' })
+    const updateRes = await req(app, 'PUT', `${base}/${id}`, {
+      title: 'Updated Title',
+    })
     expect(updateRes.status).toBe(200)
     const updated = await updateRes.json()
     expect(updated.title).toBe('Updated Title')

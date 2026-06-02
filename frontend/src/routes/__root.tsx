@@ -1,4 +1,9 @@
-import { createRootRouteWithContext, Link, Outlet, useRouter } from '@tanstack/react-router'
+import {
+  createRootRouteWithContext,
+  Link,
+  Outlet,
+  useRouter,
+} from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
 import { useSession, authClient } from '@/lib/auth-client'
 
@@ -15,13 +20,21 @@ function NavAuth() {
   const router = useRouter()
 
   if (isPending) {
-    return <span className="h-4 w-16 animate-pulse rounded bg-muted" aria-hidden="true" />
+    return (
+      <span
+        className="h-4 w-16 animate-pulse rounded bg-muted"
+        aria-hidden="true"
+      />
+    )
   }
 
   if (data?.session) {
     return (
       <>
-        <Link to="/admin" className="text-sm text-muted-foreground hover:text-foreground">
+        <Link
+          to="/admin"
+          className="text-sm text-muted-foreground hover:text-foreground"
+        >
           Admin
         </Link>
         <button
@@ -39,7 +52,10 @@ function NavAuth() {
   }
 
   return (
-    <Link to="/login" className="text-sm text-muted-foreground hover:text-foreground">
+    <Link
+      to="/login"
+      className="text-sm text-muted-foreground hover:text-foreground"
+    >
       Login
     </Link>
   )
@@ -54,7 +70,10 @@ function RootLayout() {
       >
         Skip to content
       </a>
-      <nav aria-label="Main" className="border-b px-4 sm:px-6 py-3 flex flex-wrap items-center gap-4">
+      <nav
+        aria-label="Main"
+        className="border-b px-4 sm:px-6 py-3 flex flex-wrap items-center gap-4"
+      >
         <Link
           to="/"
           activeOptions={{ exact: true }}
@@ -74,7 +93,11 @@ function RootLayout() {
           <NavAuth />
         </div>
       </nav>
-      <main id="main-content" tabIndex={-1} className="container mx-auto px-4 sm:px-6 py-8 focus:outline-none">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="container mx-auto px-4 sm:px-6 py-8 focus:outline-none"
+      >
         <Outlet />
       </main>
     </div>

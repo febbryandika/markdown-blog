@@ -13,7 +13,10 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
   if (totalPages <= 1) return null
 
   return (
-    <nav aria-label="Pagination" className="flex items-center justify-center gap-4 mt-10">
+    <nav
+      aria-label="Pagination"
+      className="flex items-center justify-center gap-4 mt-10"
+    >
       {page > 1 ? (
         <Link
           to={to}
@@ -27,7 +30,10 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
       ) : (
         <span
           aria-label="No previous page"
-          className={cn(buttonBase, 'border text-muted-foreground opacity-50 cursor-not-allowed')}
+          className={cn(
+            buttonBase,
+            'border text-muted-foreground opacity-50 cursor-not-allowed',
+          )}
         >
           ← Previous
         </span>
@@ -50,7 +56,10 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
       ) : (
         <span
           aria-label="No next page"
-          className={cn(buttonBase, 'border text-muted-foreground opacity-50 cursor-not-allowed')}
+          className={cn(
+            buttonBase,
+            'border text-muted-foreground opacity-50 cursor-not-allowed',
+          )}
         >
           Next →
         </span>

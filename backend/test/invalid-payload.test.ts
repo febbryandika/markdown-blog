@@ -9,7 +9,9 @@ describe('invalid payload validation', () => {
   beforeEach(() => setSession(fakeSession))
 
   it('rejects a missing required field (title) with 400 VALIDATION_ERROR', async () => {
-    const res = await req(app, 'POST', base, { content: 'body without a title' })
+    const res = await req(app, 'POST', base, {
+      content: 'body without a title',
+    })
 
     expect(res.status).toBe(400)
     const body = await res.json()
@@ -18,7 +20,10 @@ describe('invalid payload validation', () => {
   })
 
   it('rejects a malformed field (invalid coverImage URL) with 400 VALIDATION_ERROR', async () => {
-    const res = await req(app, 'POST', base, { title: 'Valid', coverImage: 'not-a-url' })
+    const res = await req(app, 'POST', base, {
+      title: 'Valid',
+      coverImage: 'not-a-url',
+    })
 
     expect(res.status).toBe(400)
     const body = await res.json()

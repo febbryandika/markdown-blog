@@ -11,7 +11,7 @@ export async function requestLogger(c: Context, next: Next) {
       path: c.req.path,
       status: c.res.status,
       duration: Date.now() - start,
-    })
+    }),
   )
 }
 

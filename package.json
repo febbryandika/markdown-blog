@@ -1,7 +1,10 @@
 {
   "name": "markdown-blog",
   "private": true,
-  "workspaces": ["frontend", "backend"],
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
     "dev": "bun run --concurrent dev:backend dev:frontend",
     "dev:backend": "cd backend && bun run dev",

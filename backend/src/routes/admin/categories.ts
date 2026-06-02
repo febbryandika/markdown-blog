@@ -9,6 +9,9 @@ export const adminCategoriesRouter = new Hono()
 
   // List all categories
   .get('/', async (c) => {
-    const rows = await db.select().from(categories).orderBy(asc(categories.name))
+    const rows = await db
+      .select()
+      .from(categories)
+      .orderBy(asc(categories.name))
     return c.json(rows)
   })

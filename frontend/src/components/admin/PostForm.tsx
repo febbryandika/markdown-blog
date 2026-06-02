@@ -37,7 +37,10 @@ export function PostForm({
   submittingLabel,
   onSubmit,
 }: PostFormProps) {
-  const [values, setValues] = useState<PostFormValues>({ ...EMPTY_VALUES, ...initialValues })
+  const [values, setValues] = useState<PostFormValues>({
+    ...EMPTY_VALUES,
+    ...initialValues,
+  })
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   // Keep an existing post's slug stable; only auto-fill from the title for brand-new posts.
   const [slugLocked, setSlugLocked] = useState(Boolean(initialValues?.slug))
@@ -56,13 +59,20 @@ export function PostForm({
     })
   }
 
-  function setField<K extends keyof PostFormValues>(key: K, value: PostFormValues[K]) {
+  function setField<K extends keyof PostFormValues>(
+    key: K,
+    value: PostFormValues[K],
+  ) {
     setValues((prev) => ({ ...prev, [key]: value }))
     clearError(key)
   }
 
   function handleTitleChange(title: string) {
-    setValues((prev) => ({ ...prev, title, slug: slugLocked ? prev.slug : slugify(title) }))
+    setValues((prev) => ({
+      ...prev,
+      title,
+      slug: slugLocked ? prev.slug : slugify(title),
+    }))
     clearError('title')
     if (!slugLocked) clearError('slug')
   }
@@ -75,19 +85,28 @@ export function PostForm({
   function addTag(raw: string) {
     const tag = raw.trim()
     if (!tag) return
-    setValues((prev) => (prev.tags.includes(tag) ? prev : { ...prev, tags: [...prev.tags, tag] }))
+    setValues((prev) =>
+      prev.tags.includes(tag) ? prev : { ...prev, tags: [...prev.tags, tag] },
+    )
     setTagDraft('')
   }
 
   function removeTag(tag: string) {
-    setField('tags', values.tags.filter((t) => t !== tag))
+    setField(
+      'tags',
+      values.tags.filter((t) => t !== tag),
+    )
   }
 
   function handleTagKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault()
       addTag(tagDraft)
-    } else if (e.key === 'Backspace' && tagDraft === '' && values.tags.length > 0) {
+    } else if (
+      e.key === 'Backspace' &&
+      tagDraft === '' &&
+      values.tags.length > 0
+    ) {
       removeTag(values.tags[values.tags.length - 1])
     }
   }
@@ -104,8 +123,16 @@ export function PostForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate aria-busy={submitting}>
-      <fieldset disabled={submitting} className="space-y-6 border-0 p-0 disabled:opacity-70">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-6"
+      noValidate
+      aria-busy={submitting}
+    >
+      <fieldset
+        disabled={submitting}
+        className="space-y-6 border-0 p-0 disabled:opacity-70"
+      >
         <legend className="sr-only">Post details</legend>
 
         <FormField
@@ -127,12 +154,15 @@ export function PostForm({
             error={fieldErrors.slug?.[0]}
           />
           <p className="text-xs text-muted-foreground">
-            Used in the post URL. Auto-generated from the title until you edit it.
+            Used in the post URL. Auto-generated from the title until you edit
+            it.
           </p>
         </div>
 
         <div className="space-y-1.5">
-          <label htmlFor="excerpt" className="text-sm font-medium">Excerpt</label>
+          <label htmlFor="excerpt" className="text-sm font-medium">
+            Excerpt
+          </label>
           <textarea
             id="excerpt"
             value={values.excerpt}
@@ -148,7 +178,9 @@ export function PostForm({
         </div>
 
         <div className="space-y-1.5">
-          <label htmlFor="categoryId" className="text-sm font-medium">Category</label>
+          <label htmlFor="categoryId" className="text-sm font-medium">
+            Category
+          </label>
           <select
             id="categoryId"
             value={values.categoryId}
@@ -157,16 +189,22 @@ export function PostForm({
           >
             <option value="">None</option>
             {categories.data?.map((category) => (
-              <option key={category.id} value={category.id}>{category.name}</option>
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
             ))}
           </select>
           {categories.isError && (
-            <p className="text-xs text-muted-foreground">Couldn’t load categories.</p>
+            <p className="text-xs text-muted-foreground">
+              Couldn’t load categories.
+            </p>
           )}
         </div>
 
         <div className="space-y-1.5">
-          <label htmlFor="tags" className="text-sm font-medium">Tags</label>
+          <label htmlFor="tags" className="text-sm font-medium">
+            Tags
+          </label>
           {values.tags.length > 0 && (
             <ul className="flex flex-wrap gap-2" aria-label="Selected tags">
               {values.tags.map((tag) => (
@@ -207,11 +245,15 @@ export function PostForm({
               id="published"
               type="checkbox"
               checked={values.status === 'published'}
-              onChange={(e) => setField('status', e.target.checked ? 'published' : 'draft')}
+              onChange={(e) =>
+                setField('status', e.target.checked ? 'published' : 'draft')
+              }
               aria-describedby="published-hint"
               className="h-4 w-4 rounded border-input text-primary focus:outline-none focus:ring-2 focus:ring-ring"
             />
-            <label htmlFor="published" className="text-sm font-medium">Published</label>
+            <label htmlFor="published" className="text-sm font-medium">
+              Published
+            </label>
           </div>
           <p id="published-hint" className="text-xs text-muted-foreground">
             When unchecked, the post is saved as a draft.
@@ -220,13 +262,21 @@ export function PostForm({
 
         <div className="space-y-1.5">
           <span className="text-sm font-medium">Content</span>
-          <MarkdownEditor value={values.content} onChange={(v) => setField('content', v)} id="content" />
+          <MarkdownEditor
+            value={values.content}
+            onChange={(v) => setField('content', v)}
+            id="content"
+          />
         </div>
       </fieldset>
 
       {submitError && <FormError message={submitError} />}
 
-      <SubmitButton loading={submitting} label={submitLabel} loadingLabel={submittingLabel} />
+      <SubmitButton
+        loading={submitting}
+        label={submitLabel}
+        loadingLabel={submittingLabel}
+      />
     </form>
   )
 }

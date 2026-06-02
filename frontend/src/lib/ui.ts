@@ -13,6 +13,12 @@ export const buttonBase = cn(
   'disabled:opacity-50 disabled:cursor-not-allowed',
 )
 
-export const buttonPrimary = cn(buttonBase, 'bg-primary text-primary-foreground hover:bg-primary/90')
+export const buttonPrimary = cn(
+  buttonBase,
+  'bg-primary text-primary-foreground hover:bg-primary/90',
+)
 export const buttonOutline = cn(buttonBase, 'border hover:bg-accent')
-export const buttonDestructive = cn(buttonBase, 'bg-destructive text-destructive-foreground hover:bg-destructive/90')
+export const buttonDestructive = cn(
+  buttonBase,
+  'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+)

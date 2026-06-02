@@ -26,7 +26,9 @@ describe('POST /api/admin/posts/preview', () => {
   })
 
   it('sanitizes dangerous markup (no script tags or javascript: URLs)', async () => {
-    const res = await preview('[x](javascript:alert(1)) and <script>alert(2)</script>')
+    const res = await preview(
+      '[x](javascript:alert(1)) and <script>alert(2)</script>',
+    )
 
     expect(res.status).toBe(200)
     const { html } = await res.json()
