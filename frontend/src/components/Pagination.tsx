@@ -1,14 +1,12 @@
-import { Link } from '@tanstack/react-router'
+import { Link, type LinkProps } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
 import { buttonBase, buttonOutline } from '@/lib/ui'
 
 interface PaginationProps {
   page: number
   totalPages: number
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  to: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params?: any
+  to: LinkProps['to']
+  params?: LinkProps['params']
 }
 
 export function Pagination({ page, totalPages, to, params }: PaginationProps) {
@@ -20,8 +18,7 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
         <Link
           to={to}
           params={params}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          search={{ page: page - 1 } as any}
+          search={{ page: page - 1 }}
           aria-label="Go to previous page"
           className={buttonOutline}
         >
@@ -44,8 +41,7 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
         <Link
           to={to}
           params={params}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          search={{ page: page + 1 } as any}
+          search={{ page: page + 1 }}
           aria-label="Go to next page"
           className={buttonOutline}
         >

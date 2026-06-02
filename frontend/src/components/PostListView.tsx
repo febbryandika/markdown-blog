@@ -1,4 +1,5 @@
 import type { UseQueryResult } from '@tanstack/react-query'
+import type { LinkProps } from '@tanstack/react-router'
 import type { PostsResponse } from '@/hooks/posts'
 import { PostCard } from './PostCard'
 import { Pagination } from './Pagination'
@@ -9,10 +10,8 @@ import { ErrorState } from './ErrorState'
 interface PostListViewProps {
   query: UseQueryResult<PostsResponse>
   page: number
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  to: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params?: any
+  to: LinkProps['to']
+  params?: LinkProps['params']
   emptyMessage: string
 }
 

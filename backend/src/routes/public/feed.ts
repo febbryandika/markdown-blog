@@ -26,10 +26,11 @@ export const feedRouter = new Hono().get('/', async (c) => {
   })
 
   for (const post of rows) {
+    if (!post.publishedAt) continue
     feed.item({
       title: post.title,
       url: `${siteUrl}/blog/${post.slug}`,
-      date: post.publishedAt!,
+      date: post.publishedAt,
       description: post.excerpt ?? '',
     })
   }
