@@ -45,9 +45,9 @@ function AdminPage() {
     <section aria-labelledby="admin-heading">
       <header className="mb-6 flex items-center justify-between">
         <div>
-          <h1 id="admin-heading" className="text-2xl font-bold tracking-tight">Posts</h1>
+          <h1 id="admin-heading" className="text-3xl font-bold tracking-tight leading-tight">Posts</h1>
           {!isLoading && !isError && (
-            <p className="mt-0.5 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground">
               {postCount} {postCount === 1 ? 'post' : 'posts'}
             </p>
           )}

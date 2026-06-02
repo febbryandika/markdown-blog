@@ -19,8 +19,8 @@ function BlogPage() {
   return (
     <section aria-labelledby="blog-heading">
       <header className="mb-8">
-        <h1 id="blog-heading" className="text-3xl font-bold tracking-tight">Blog</h1>
-        <p className="mt-1 text-muted-foreground">Latest posts</p>
+        <h1 id="blog-heading" className="text-3xl font-bold tracking-tight leading-tight">Blog</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Latest posts</p>
       </header>
       <PostListView
         query={query}
