@@ -6,6 +6,7 @@ import { MarkdownEditor } from '@/components/admin/MarkdownEditor'
 import { useCategories } from '@/hooks/admin-posts'
 import { postFormSchema, type PostFormValues } from '@/lib/post-schema'
 import { cn, slugify } from '@/lib/utils'
+import { inputClasses } from '@/lib/ui'
 
 type FieldErrors = Partial<Record<keyof PostFormValues, string[]>>
 
@@ -18,13 +19,6 @@ const EMPTY_VALUES: PostFormValues = {
   categoryId: '',
   tags: [],
 }
-
-// Shared styling for the inline controls, matching FormField's input.
-const controlClasses = cn(
-  'w-full rounded-md border border-input bg-background px-3 py-2 text-sm',
-  'focus:outline-none focus:ring-2 focus:ring-ring',
-  'disabled:opacity-50 disabled:cursor-not-allowed',
-)
 
 interface PostFormProps {
   initialValues?: Partial<PostFormValues>
@@ -146,7 +140,7 @@ export function PostForm({
             rows={3}
             placeholder="A short summary of the post."
             aria-describedby="excerpt-hint"
-            className={cn(controlClasses, 'resize-y')}
+            className={cn(inputClasses, 'resize-y')}
           />
           <p id="excerpt-hint" className="text-xs text-muted-foreground">
             Optional. Shown in post listings and the RSS feed.
@@ -159,7 +153,7 @@ export function PostForm({
             id="categoryId"
             value={values.categoryId}
             onChange={(e) => setField('categoryId', e.target.value)}
-            className={controlClasses}
+            className={inputClasses}
           >
             <option value="">None</option>
             {categories.data?.map((category) => (
@@ -177,7 +171,7 @@ export function PostForm({
             <ul className="flex flex-wrap gap-2" aria-label="Selected tags">
               {values.tags.map((tag) => (
                 <li key={tag}>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
                     {tag}
                     <button
                       type="button"
@@ -200,7 +194,7 @@ export function PostForm({
             onKeyDown={handleTagKeyDown}
             placeholder="Add a tag"
             aria-describedby="tags-hint"
-            className={controlClasses}
+            className={inputClasses}
           />
           <p id="tags-hint" className="text-xs text-muted-foreground">
             Press Enter or comma to add a tag.

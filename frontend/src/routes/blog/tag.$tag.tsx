@@ -20,7 +20,7 @@ function TagPage() {
   return (
     <section aria-labelledby="tag-heading">
       <header className="mb-8">
-        <h1 id="tag-heading" className="text-3xl font-bold tracking-tight">
+        <h1 id="tag-heading" className="text-3xl font-bold tracking-tight leading-tight">
           Posts tagged <span className="text-primary">#{tag}</span>
         </h1>
       </header>

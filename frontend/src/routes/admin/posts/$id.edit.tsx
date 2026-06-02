@@ -3,7 +3,7 @@ import { PostForm } from '@/components/admin/PostForm'
 import { useAdminPost, useUpdatePost } from '@/hooks/admin-posts'
 import { toPostPayload } from '@/lib/post-schema'
 import { ErrorState } from '@/components/ErrorState'
-import { Skeleton } from '@/components/Skeleton'
+import { PostFormSkeleton } from '@/components/Skeleton'
 
 export const Route = createFileRoute('/admin/posts/$id/edit')({
   component: EditPostPage,
@@ -17,19 +17,12 @@ function EditPostPage() {
 
   return (
     <section aria-labelledby="edit-post-heading">
-      <header className="mb-6">
-        <h1 id="edit-post-heading" className="text-2xl font-bold tracking-tight">Edit post</h1>
-        <p className="mt-0.5 text-sm text-muted-foreground">Update your post and save your changes.</p>
+      <header className="mb-8">
+        <h1 id="edit-post-heading" className="text-3xl font-bold tracking-tight leading-tight">Edit post</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Update your post and save your changes.</p>
       </header>
 
-      {post.isLoading && (
-        <div className="space-y-4" aria-hidden="true">
-          <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-20 w-full" />
-          <Skeleton className="h-[40vh] w-full" />
-        </div>
-      )}
+      {post.isLoading && <PostFormSkeleton />}
 
       {post.isError && (
         <ErrorState

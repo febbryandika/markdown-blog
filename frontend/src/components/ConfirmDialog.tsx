@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { buttonOutline, buttonDestructive } from '@/lib/ui'
 
 interface ConfirmDialogProps {
   open: boolean
@@ -58,7 +59,7 @@ export function ConfirmDialog({
           type="button"
           onClick={onCancel}
           disabled={loading}
-          className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors disabled:opacity-50"
+          className={buttonOutline}
         >
           Cancel
         </button>
@@ -66,7 +67,7 @@ export function ConfirmDialog({
           type="button"
           onClick={onConfirm}
           disabled={loading}
-          className="rounded-md bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground hover:bg-destructive/90 transition-colors disabled:opacity-50"
+          className={buttonDestructive}
         >
           {loading ? 'Deleting…' : confirmLabel}
         </button>

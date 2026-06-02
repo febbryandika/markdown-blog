@@ -1,4 +1,6 @@
 import { Link } from '@tanstack/react-router'
+import { cn } from '@/lib/utils'
+import { buttonBase, buttonOutline } from '@/lib/ui'
 
 interface PaginationProps {
   page: number
@@ -21,15 +23,14 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           search={{ page: page - 1 } as any}
           aria-label="Go to previous page"
-          className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
+          className={buttonOutline}
         >
           ← Previous
         </Link>
       ) : (
         <span
-          aria-disabled="true"
           aria-label="No previous page"
-          className="rounded-md border px-4 py-2 text-sm font-medium text-muted-foreground cursor-not-allowed opacity-50"
+          className={cn(buttonBase, 'border text-muted-foreground opacity-50 cursor-not-allowed')}
         >
           ← Previous
         </span>
@@ -46,15 +47,14 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           search={{ page: page + 1 } as any}
           aria-label="Go to next page"
-          className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
+          className={buttonOutline}
         >
           Next →
         </Link>
       ) : (
         <span
-          aria-disabled="true"
           aria-label="No next page"
-          className="rounded-md border px-4 py-2 text-sm font-medium text-muted-foreground cursor-not-allowed opacity-50"
+          className={cn(buttonBase, 'border text-muted-foreground opacity-50 cursor-not-allowed')}
         >
           Next →
         </span>

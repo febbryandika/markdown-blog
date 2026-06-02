@@ -4,6 +4,7 @@ import { PostBody } from '@/components/PostBody'
 import { TagBadge } from '@/components/TagBadge'
 import { PostDetailSkeleton } from '@/components/Skeleton'
 import { ErrorState } from '@/components/ErrorState'
+import { EmptyState } from '@/components/EmptyState'
 import { formatDate } from '@/lib/utils'
 
 export const Route = createFileRoute('/blog/$slug')({
@@ -19,10 +20,15 @@ function PostPage() {
   if (isError) {
     if (error instanceof Error && error.message === 'NOT_FOUND') {
       return (
-        <div className="flex flex-col items-center justify-center py-20 gap-3 text-center">
-          <p className="text-lg font-medium">Post not found</p>
-          <Link to="/blog" className="text-sm text-primary hover:underline">← Back to blog</Link>
-        </div>
+        <EmptyState
+          message="Post not found"
+          hint="This post may have been moved or deleted."
+          action={
+            <Link to="/blog" className="text-sm text-primary hover:underline">
+              ← Back to blog
+            </Link>
+          }
+        />
       )
     }
     return (
@@ -37,6 +43,13 @@ function PostPage() {
 
   return (
     <article className="max-w-2xl mx-auto" aria-labelledby="post-title">
+      <Link
+        to="/blog"
+        className="mb-6 inline-flex items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        ← Blog
+      </Link>
+
       {post.coverImage && (
         <img
           src={post.coverImage}
@@ -63,7 +76,7 @@ function PostPage() {
         </div>
 
         {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5" aria-label="Tags">
+          <div className="flex flex-wrap gap-2" aria-label="Tags">
             {post.tags.map((tag) => (
               <TagBadge key={tag} tag={tag} />
             ))}

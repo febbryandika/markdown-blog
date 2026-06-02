@@ -1,17 +1,19 @@
+import { buttonOutline } from '@/lib/ui'
+
 interface ErrorStateProps {
   message?: string
   onRetry?: () => void
 }
 
-export function ErrorState({ message = 'Something went wrong.', onRetry }: ErrorStateProps) {
+export function ErrorState({ message = 'Something went wrong while loading this content.', onRetry }: ErrorStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
+    <div role="alert" className="flex flex-col items-center justify-center py-20 gap-4 text-center">
       <p className="text-destructive font-medium">{message}</p>
       {onRetry && (
         <button
           type="button"
           onClick={onRetry}
-          className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
+          className={buttonOutline}
         >
           Try again
         </button>

@@ -1,3 +1,6 @@
+import { cn } from '@/lib/utils'
+import { buttonPrimary } from '@/lib/ui'
+
 interface SubmitButtonProps {
   loading: boolean
   label: string
@@ -10,7 +13,7 @@ export function SubmitButton({ loading, label, loadingLabel = 'Loading…' }: Su
       type="submit"
       disabled={loading}
       aria-busy={loading}
-      className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
+      className={cn(buttonPrimary, 'w-full')}
     >
       {loading ? (
         <span className="flex items-center justify-center gap-2">
