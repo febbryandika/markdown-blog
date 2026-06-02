@@ -1,13 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
-import { MarkdownEditor } from '@/components/admin/MarkdownEditor'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { PostForm } from '@/components/admin/PostForm'
+import { useCreatePost } from '@/hooks/admin-posts'
+import { toPostPayload } from '@/lib/post-schema'
 
 export const Route = createFileRoute('/admin/posts/new')({
   component: NewPostPage,
 })
 
 function NewPostPage() {
-  const [content, setContent] = useState('')
+  const router = useRouter()
+  const createPost = useCreatePost()
 
   return (
     <section aria-labelledby="new-post-heading">
@@ -16,7 +18,17 @@ function NewPostPage() {
         <p className="mt-0.5 text-sm text-muted-foreground">Write your post in Markdown.</p>
       </header>
 
-      <MarkdownEditor value={content} onChange={setContent} />
+      <PostForm
+        submitting={createPost.isPending}
+        submitError={createPost.error?.message ?? null}
+        submitLabel="Create post"
+        submittingLabel="Creating…"
+        onSubmit={(values) =>
+          createPost.mutate(toPostPayload(values), {
+            onSuccess: () => router.navigate({ to: '/admin' }),
+          })
+        }
+      />
     </section>
   )
 }

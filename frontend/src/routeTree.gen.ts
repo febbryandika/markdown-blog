@@ -17,6 +17,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as BlogTagTagRouteImport } from './routes/blog/tag.$tag'
 import { Route as AdminPostsNewRouteImport } from './routes/admin/posts/new'
+import { Route as AdminPostsIdEditRouteImport } from './routes/admin/posts/$id.edit'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -58,6 +59,11 @@ const AdminPostsNewRoute = AdminPostsNewRouteImport.update({
   path: '/posts/new',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminPostsIdEditRoute = AdminPostsIdEditRouteImport.update({
+  id: '/posts/$id/edit',
+  path: '/posts/$id/edit',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/blog/': typeof BlogIndexRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
   '/blog/tag/$tag': typeof BlogTagTagRoute
+  '/admin/posts/$id/edit': typeof AdminPostsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogIndexRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
   '/blog/tag/$tag': typeof BlogTagTagRoute
+  '/admin/posts/$id/edit': typeof AdminPostsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/blog/': typeof BlogIndexRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
   '/blog/tag/$tag': typeof BlogTagTagRoute
+  '/admin/posts/$id/edit': typeof AdminPostsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/admin/posts/new'
     | '/blog/tag/$tag'
+    | '/admin/posts/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/admin/posts/new'
     | '/blog/tag/$tag'
+    | '/admin/posts/$id/edit'
   id:
     | '__root__'
     | '/'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/admin/posts/new'
     | '/blog/tag/$tag'
+    | '/admin/posts/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -188,17 +200,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPostsNewRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/posts/$id/edit': {
+      id: '/admin/posts/$id/edit'
+      path: '/posts/$id/edit'
+      fullPath: '/admin/posts/$id/edit'
+      preLoaderRoute: typeof AdminPostsIdEditRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
 interface AdminRouteRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   AdminPostsNewRoute: typeof AdminPostsNewRoute
+  AdminPostsIdEditRoute: typeof AdminPostsIdEditRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   AdminPostsNewRoute: AdminPostsNewRoute,
+  AdminPostsIdEditRoute: AdminPostsIdEditRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(

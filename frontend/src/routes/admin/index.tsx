@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { z } from 'zod'
 import { useAdminPosts, useDeletePost } from '@/hooks/admin-posts'
@@ -52,6 +52,12 @@ function AdminPage() {
             </p>
           )}
         </div>
+        <Link
+          to="/admin/posts/new"
+          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
+          New post
+        </Link>
       </header>
 
       {isLoading && <AdminTableSkeleton />}
@@ -90,13 +96,22 @@ function AdminPage() {
                     {post.publishedAt ? formatDate(post.publishedAt) : '—'}
                   </TD>
                   <TD className="text-right">
-                    <button
-                      type="button"
-                      onClick={() => setPendingDeleteId(post.id)}
-                      className="rounded px-3 py-1 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
-                    >
-                      Delete
-                    </button>
+                    <div className="flex items-center justify-end gap-1">
+                      <Link
+                        to="/admin/posts/$id/edit"
+                        params={{ id: post.id }}
+                        className="rounded px-3 py-1 text-xs font-medium text-foreground hover:bg-accent transition-colors"
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => setPendingDeleteId(post.id)}
+                        className="rounded px-3 py-1 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </TD>
                 </TR>
               ))}

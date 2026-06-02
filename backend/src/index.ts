@@ -6,6 +6,7 @@ import { handleError, notFoundHandler } from './lib/errors'
 import { requestLogger } from './lib/logger'
 import { env } from './lib/env'
 import { adminPostsRouter } from './routes/admin/posts'
+import { adminCategoriesRouter } from './routes/admin/categories'
 import { publicPostsRouter } from './routes/public/posts'
 import { feedRouter } from './routes/public/feed'
 
@@ -48,6 +49,7 @@ app.notFound(notFoundHandler)
 const routes = app
   .route('/api', api)
   .route('/api/admin/posts', adminPostsRouter)
+  .route('/api/admin/categories', adminCategoriesRouter)
   .route('/api/posts', publicPostsRouter)
   .route('/feed', feedRouter)
 
