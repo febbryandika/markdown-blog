@@ -90,8 +90,8 @@ function AdminPage() {
               <tr>
                 <TH>Title</TH>
                 <TH>Status</TH>
-                <TH className="whitespace-nowrap">Updated</TH>
-                <TH className="whitespace-nowrap">Published</TH>
+                <TH className="hidden sm:table-cell whitespace-nowrap">Updated</TH>
+                <TH className="hidden sm:table-cell whitespace-nowrap">Published</TH>
                 <TH><span className="sr-only">Actions</span></TH>
               </tr>
             </THead>
@@ -100,23 +100,23 @@ function AdminPage() {
                 <TR key={post.id}>
                   <TD className="font-medium max-w-xs truncate">{post.title}</TD>
                   <TD><StatusBadge status={post.status} /></TD>
-                  <TD className="text-muted-foreground whitespace-nowrap">{formatDate(post.updatedAt)}</TD>
-                  <TD className="text-muted-foreground whitespace-nowrap">
+                  <TD className="hidden sm:table-cell text-muted-foreground whitespace-nowrap">{formatDate(post.updatedAt)}</TD>
+                  <TD className="hidden sm:table-cell text-muted-foreground whitespace-nowrap">
                     {post.publishedAt ? formatDate(post.publishedAt) : '—'}
                   </TD>
                   <TD className="text-right">
-                    <div className="flex items-center justify-end gap-1">
+                    <div className="flex items-center justify-end gap-2">
                       <Link
                         to="/admin/posts/$id/edit"
                         params={{ id: post.id }}
-                        className="rounded px-3 py-1 text-xs font-medium text-foreground hover:bg-accent transition-colors"
+                        className="rounded px-3 py-1.5 text-xs font-medium text-foreground hover:bg-accent transition-colors"
                       >
                         Edit
                       </Link>
                       <button
                         type="button"
                         onClick={() => setPendingDeleteId(post.id)}
-                        className="rounded px-3 py-1 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
+                        className="rounded px-3 py-1.5 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
                       >
                         Delete
                       </button>
