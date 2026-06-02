@@ -48,6 +48,12 @@ function NavAuth() {
 function RootLayout() {
   return (
     <div className="min-h-screen bg-background">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-medium"
+      >
+        Skip to content
+      </a>
       <nav aria-label="Main" className="border-b px-4 sm:px-6 py-3 flex flex-wrap items-center gap-4">
         <Link
           to="/"
@@ -68,7 +74,7 @@ function RootLayout() {
           <NavAuth />
         </div>
       </nav>
-      <main id="main-content" className="container mx-auto px-4 sm:px-6 py-8">
+      <main id="main-content" tabIndex={-1} className="container mx-auto px-4 sm:px-6 py-8 focus:outline-none">
         <Outlet />
       </main>
     </div>
