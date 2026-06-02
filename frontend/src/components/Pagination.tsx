@@ -27,7 +27,6 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
         </Link>
       ) : (
         <span
-          aria-disabled="true"
           aria-label="No previous page"
           className="rounded-md border px-4 py-2 text-sm font-medium text-muted-foreground cursor-not-allowed opacity-50"
         >
@@ -52,7 +51,6 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
         </Link>
       ) : (
         <span
-          aria-disabled="true"
           aria-label="No next page"
           className="rounded-md border px-4 py-2 text-sm font-medium text-muted-foreground cursor-not-allowed opacity-50"
         >

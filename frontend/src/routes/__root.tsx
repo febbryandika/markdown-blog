@@ -48,7 +48,7 @@ function NavAuth() {
 function RootLayout() {
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b px-4 sm:px-6 py-3 flex flex-wrap items-center gap-4">
+      <nav aria-label="Main" className="border-b px-4 sm:px-6 py-3 flex flex-wrap items-center gap-4">
         <Link
           to="/"
           activeOptions={{ exact: true }}
@@ -68,7 +68,7 @@ function RootLayout() {
           <NavAuth />
         </div>
       </nav>
-      <main className="container mx-auto px-4 sm:px-6 py-8">
+      <main id="main-content" className="container mx-auto px-4 sm:px-6 py-8">
         <Outlet />
       </main>
     </div>
