@@ -171,7 +171,7 @@ export function PostForm({
             <ul className="flex flex-wrap gap-2" aria-label="Selected tags">
               {values.tags.map((tag) => (
                 <li key={tag}>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
                     {tag}
                     <button
                       type="button"

@@ -109,14 +109,14 @@ function AdminPage() {
                       <Link
                         to="/admin/posts/$id/edit"
                         params={{ id: post.id }}
-                        className="rounded px-3 py-1.5 text-xs font-medium text-foreground hover:bg-accent transition-colors"
+                        className="rounded-md px-3 py-1.5 text-xs font-medium text-foreground hover:bg-accent transition-colors"
                       >
                         Edit
                       </Link>
                       <button
                         type="button"
                         onClick={() => setPendingDeleteId(post.id)}
-                        className="rounded px-3 py-1.5 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
+                        className="rounded-md px-3 py-1.5 text-xs font-medium text-destructive hover:bg-destructive/10 transition-colors"
                       >
                         Delete
                       </button>
