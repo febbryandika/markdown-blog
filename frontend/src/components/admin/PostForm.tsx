@@ -51,12 +51,26 @@ export function PostForm({
 
   const categories = useCategories()
 
+  // Clear a field's validation error as soon as the user edits it (errors otherwise
+  // linger until the next submit).
+  function clearError(key: keyof PostFormValues) {
+    setFieldErrors((prev) => {
+      if (!prev[key]) return prev
+      const next = { ...prev }
+      delete next[key]
+      return next
+    })
+  }
+
   function setField<K extends keyof PostFormValues>(key: K, value: PostFormValues[K]) {
     setValues((prev) => ({ ...prev, [key]: value }))
+    clearError(key)
   }
 
   function handleTitleChange(title: string) {
     setValues((prev) => ({ ...prev, title, slug: slugLocked ? prev.slug : slugify(title) }))
+    clearError('title')
+    if (!slugLocked) clearError('slug')
   }
 
   function handleSlugChange(slug: string) {
