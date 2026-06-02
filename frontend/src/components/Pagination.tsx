@@ -1,6 +1,5 @@
 import { Link, type LinkProps } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
-import { buttonBase, buttonOutline } from '@/lib/ui'
 
 interface PaginationProps {
   page: number
@@ -9,13 +8,24 @@ interface PaginationProps {
   params?: LinkProps['params']
 }
 
+const pillBase =
+  'inline-flex items-center gap-1.5 rounded-full border border-border/70 px-4 py-2 font-mono text-[0.7rem] uppercase tracking-[0.2em]'
+const pillActive = cn(
+  pillBase,
+  'transition-colors hover:border-brand/50 hover:text-brand',
+)
+const pillDisabled = cn(
+  pillBase,
+  'cursor-not-allowed text-muted-foreground opacity-40',
+)
+
 export function Pagination({ page, totalPages, to, params }: PaginationProps) {
   if (totalPages <= 1) return null
 
   return (
     <nav
       aria-label="Pagination"
-      className="flex items-center justify-center gap-4 mt-10"
+      className="mt-12 flex items-center justify-center gap-4"
     >
       {page > 1 ? (
         <Link
@@ -23,24 +33,21 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
           params={params}
           search={{ page: page - 1 }}
           aria-label="Go to previous page"
-          className={buttonOutline}
+          className={pillActive}
         >
-          ← Previous
+          ← Prev
         </Link>
       ) : (
-        <span
-          aria-label="No previous page"
-          className={cn(
-            buttonBase,
-            'border text-muted-foreground opacity-50 cursor-not-allowed',
-          )}
-        >
-          ← Previous
+        <span aria-label="No previous page" className={pillDisabled}>
+          ← Prev
         </span>
       )}
 
-      <span className="text-sm text-muted-foreground" aria-live="polite">
-        Page {page} of {totalPages}
+      <span
+        className="font-mono text-xs uppercase tracking-wider text-muted-foreground"
+        aria-live="polite"
+      >
+        {page} / {totalPages}
       </span>
 
       {page < totalPages ? (
@@ -49,18 +56,12 @@ export function Pagination({ page, totalPages, to, params }: PaginationProps) {
           params={params}
           search={{ page: page + 1 }}
           aria-label="Go to next page"
-          className={buttonOutline}
+          className={pillActive}
         >
           Next →
         </Link>
       ) : (
-        <span
-          aria-label="No next page"
-          className={cn(
-            buttonBase,
-            'border text-muted-foreground opacity-50 cursor-not-allowed',
-          )}
-        >
+        <span aria-label="No next page" className={pillDisabled}>
           Next →
         </span>
       )}

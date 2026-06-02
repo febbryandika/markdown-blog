@@ -10,12 +10,13 @@ export function Skeleton({ className }: SkeletonProps) {
 
 export function PostCardSkeleton() {
   return (
-    <div className="flex flex-col gap-3 rounded-lg border bg-card p-5">
-      <Skeleton className="h-5 w-3/4" />
-      <Skeleton className="h-4 w-24" />
+    <div className="flex flex-col gap-4 rounded-xl border border-border/70 bg-card p-5">
+      <Skeleton className="aspect-[16/9] w-full rounded-lg" />
+      <Skeleton className="h-3 w-24" />
+      <Skeleton className="h-6 w-3/4" />
       <Skeleton className="h-4 w-full" />
       <Skeleton className="h-4 w-5/6" />
-      <div className="flex gap-1.5 pt-2">
+      <div className="flex gap-1.5 pt-1">
         <Skeleton className="h-5 w-14 rounded-full" />
         <Skeleton className="h-5 w-14 rounded-full" />
       </div>
@@ -43,14 +44,14 @@ export function PostDetailSkeleton() {
   return (
     <div role="status" aria-busy="true">
       <span className="sr-only">Loading post…</span>
-      <div className="max-w-2xl mx-auto flex flex-col gap-4" aria-hidden="true">
-        <Skeleton className="h-8 w-3/4" />
-        <Skeleton className="h-4 w-40" />
-        <div className="flex gap-1.5">
-          <Skeleton className="h-5 w-16 rounded-full" />
-          <Skeleton className="h-5 w-16 rounded-full" />
+      <div className="mx-auto max-w-2xl" aria-hidden="true">
+        <div className="mb-10 flex flex-col items-center gap-4 text-center">
+          <Skeleton className="h-3 w-20" />
+          <Skeleton className="h-10 w-3/4" />
+          <Skeleton className="h-3 w-44" />
         </div>
-        <div className="mt-4 flex flex-col gap-3">
+        <Skeleton className="mb-12 aspect-[2/1] w-full rounded-xl" />
+        <div className="flex flex-col gap-3">
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-5/6" />

@@ -19,13 +19,19 @@ function TagPage() {
 
   return (
     <section aria-labelledby="tag-heading">
-      <header className="mb-8">
+      <header className="animate-fade-up mb-10 border-b border-border/70 pb-6">
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-brand">
+          Tag
+        </p>
         <h1
           id="tag-heading"
-          className="text-3xl font-bold tracking-tight leading-tight"
+          className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl"
         >
-          Posts tagged <span className="text-primary">#{tag}</span>
+          #{tag}
         </h1>
+        <p className="mt-3 text-muted-foreground">
+          Every post filed under <span className="text-foreground">{tag}</span>.
+        </p>
       </header>
       <PostListView
         query={query}

@@ -44,8 +44,14 @@ export function PostListView({
   return (
     <div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {data.posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+        {data.posts.map((post, i) => (
+          <div
+            key={post.id}
+            className="animate-fade-up"
+            style={{ animationDelay: `${Math.min(i, 8) * 60}ms` }}
+          >
+            <PostCard post={post} />
+          </div>
         ))}
       </div>
       <Pagination

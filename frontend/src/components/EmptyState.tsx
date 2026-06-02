@@ -10,11 +10,16 @@ export function EmptyState({ message, hint, action }: EmptyStateProps) {
   return (
     <div
       role="status"
-      className="flex flex-col items-center justify-center py-20 gap-2 text-center"
+      className="flex flex-col items-center justify-center gap-3 py-24 text-center"
     >
-      <p className="text-muted-foreground font-medium">{message}</p>
-      {hint && <p className="text-sm text-muted-foreground">{hint}</p>}
-      {action && <div className="mt-2">{action}</div>}
+      <span aria-hidden="true" className="font-display text-4xl text-brand/50">
+        ✦
+      </span>
+      <p className="font-display text-2xl font-semibold tracking-tight">
+        {message}
+      </p>
+      {hint && <p className="max-w-sm text-muted-foreground">{hint}</p>}
+      {action && <div className="mt-3">{action}</div>}
     </div>
   )
 }
