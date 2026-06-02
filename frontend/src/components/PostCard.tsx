@@ -43,7 +43,7 @@ export function PostCard({ post }: PostCardProps) {
       )}
 
       {post.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
+        <div className="flex flex-wrap gap-2 mt-auto pt-2">
           {post.tags.map((tag) => (
             <TagBadge key={tag} tag={tag} />
           ))}

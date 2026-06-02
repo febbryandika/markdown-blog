@@ -63,7 +63,7 @@ function PostPage() {
         </div>
 
         {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5" aria-label="Tags">
+          <div className="flex flex-wrap gap-2" aria-label="Tags">
             {post.tags.map((tag) => (
               <TagBadge key={tag} tag={tag} />
             ))}
