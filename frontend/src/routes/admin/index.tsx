@@ -43,7 +43,7 @@ function AdminPage() {
 
   return (
     <section aria-labelledby="admin-heading">
-      <header className="mb-8 flex items-center justify-between">
+      <header className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 id="admin-heading" className="text-3xl font-bold tracking-tight leading-tight">Posts</h1>
           {!isLoading && !isError && (
