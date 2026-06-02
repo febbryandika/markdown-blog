@@ -70,7 +70,18 @@ function AdminPage() {
       )}
 
       {!isLoading && !isError && data && data.length === 0 && (
-        <EmptyState message="No posts yet." hint="Create your first post to get started." />
+        <EmptyState
+          message="No posts yet."
+          hint="Create your first post to get started."
+          action={
+            <Link
+              to="/admin/posts/new"
+              className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              New post
+            </Link>
+          }
+        />
       )}
 
       {!isLoading && !isError && data && data.length > 0 && (
