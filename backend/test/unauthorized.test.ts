@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { adminPostsRouter } from '@/routes/admin/posts'
-import { makeApp, req } from './utils/app'
+import { makeApp, req } from './utils'
 
 const base = '/api/admin/posts'
 const app = makeApp(base, adminPostsRouter)

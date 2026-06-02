@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { Hono } from 'hono'
 import { requireAuth } from '@/lib/middleware'
-import { setSession, fakeSession } from './setup'
+import { setSession, fakeSession } from './utils'
 
 // Mount the real `requireAuth` on a minimal app and drive it through both paths.
 const app = new Hono().use('*', requireAuth).get('/whoami', (c) => c.json({ user: c.get('user') }))

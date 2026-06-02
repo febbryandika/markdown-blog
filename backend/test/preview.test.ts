@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { Hono } from 'hono'
 import { adminPostsRouter } from '@/routes/admin/posts'
-import { setSession, fakeSession } from './setup'
+import { setSession, fakeSession } from './utils'
 
 const app = new Hono().route('/api/admin/posts', adminPostsRouter)
 

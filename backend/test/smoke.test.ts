@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { testDb } from './utils/db'
+import { testDb } from './utils'
 import { posts } from '../src/db/schema'
 
 // Proves the runner + in-memory DB harness work end-to-end under Bun.
