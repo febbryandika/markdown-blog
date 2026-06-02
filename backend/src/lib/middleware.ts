@@ -14,7 +14,12 @@ declare module 'hono' {
 export async function requireAuth(c: Context, next: Next) {
   const session = await auth.api.getSession({ headers: c.req.raw.headers })
   if (!session) {
-    return errorResponse(c, 401, ErrorCode.UNAUTHORIZED, 'Authentication required')
+    return errorResponse(
+      c,
+      401,
+      ErrorCode.UNAUTHORIZED,
+      'Authentication required',
+    )
   }
   c.set('user', session.user)
   c.set('session', session.session)

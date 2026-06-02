@@ -46,7 +46,12 @@ function AdminPage() {
     <section aria-labelledby="admin-heading">
       <header className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 id="admin-heading" className="text-3xl font-bold tracking-tight leading-tight">Posts</h1>
+          <h1
+            id="admin-heading"
+            className="text-3xl font-bold tracking-tight leading-tight"
+          >
+            Posts
+          </h1>
           {!isLoading && !isError && (
             <p className="mt-1 text-sm text-muted-foreground">
               {postCount} {postCount === 1 ? 'post' : 'posts'}
@@ -62,7 +67,9 @@ function AdminPage() {
 
       {isError && (
         <ErrorState
-          message={error instanceof Error ? error.message : 'Failed to load posts.'}
+          message={
+            error instanceof Error ? error.message : 'Failed to load posts.'
+          }
           onRetry={() => refetch()}
         />
       )}
@@ -72,10 +79,7 @@ function AdminPage() {
           message="No posts yet."
           hint="Create your first post to get started."
           action={
-            <Link
-              to="/admin/posts/new"
-              className={buttonPrimary}
-            >
+            <Link to="/admin/posts/new" className={buttonPrimary}>
               New post
             </Link>
           }
@@ -90,17 +94,29 @@ function AdminPage() {
               <tr>
                 <TH>Title</TH>
                 <TH>Status</TH>
-                <TH className="hidden sm:table-cell whitespace-nowrap">Updated</TH>
-                <TH className="hidden sm:table-cell whitespace-nowrap">Published</TH>
-                <TH><span className="sr-only">Actions</span></TH>
+                <TH className="hidden sm:table-cell whitespace-nowrap">
+                  Updated
+                </TH>
+                <TH className="hidden sm:table-cell whitespace-nowrap">
+                  Published
+                </TH>
+                <TH>
+                  <span className="sr-only">Actions</span>
+                </TH>
               </tr>
             </THead>
             <TBody>
               {pagePosts.map((post) => (
                 <TR key={post.id}>
-                  <TD className="font-medium max-w-[9rem] truncate sm:max-w-xs">{post.title}</TD>
-                  <TD><StatusBadge status={post.status} /></TD>
-                  <TD className="hidden sm:table-cell text-muted-foreground whitespace-nowrap">{formatDate(post.updatedAt)}</TD>
+                  <TD className="font-medium max-w-[9rem] truncate sm:max-w-xs">
+                    {post.title}
+                  </TD>
+                  <TD>
+                    <StatusBadge status={post.status} />
+                  </TD>
+                  <TD className="hidden sm:table-cell text-muted-foreground whitespace-nowrap">
+                    {formatDate(post.updatedAt)}
+                  </TD>
                   <TD className="hidden sm:table-cell text-muted-foreground whitespace-nowrap">
                     {post.publishedAt ? formatDate(post.publishedAt) : '—'}
                   </TD>

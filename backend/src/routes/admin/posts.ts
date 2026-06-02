@@ -15,7 +15,10 @@ import {
 import { markdownToHtml } from '../../lib/markdown'
 import { previewSchema } from '../../validation'
 
-async function generateUniqueSlug(base: string, excludeId?: string): Promise<string> {
+async function generateUniqueSlug(
+  base: string,
+  excludeId?: string,
+): Promise<string> {
   let candidate = base
   let counter = 2
 
@@ -26,7 +29,7 @@ async function generateUniqueSlug(base: string, excludeId?: string): Promise<str
       .where(
         excludeId
           ? and(eq(posts.slug, candidate), ne(posts.id, excludeId))
-          : eq(posts.slug, candidate)
+          : eq(posts.slug, candidate),
       )
       .limit(1)
 
@@ -86,58 +89,78 @@ export const adminPostsRouter = new Hono()
   // Get single post for editing
   .get('/:id', validate('param', idParamSchema), async (c) => {
     const { id } = c.req.valid('param')
-    const [post] = await db.select().from(posts).where(eq(posts.id, id)).limit(1)
+    const [post] = await db
+      .select()
+      .from(posts)
+      .where(eq(posts.id, id))
+      .limit(1)
     if (!post) throw ApiError.notFound('Post not found')
     return c.json(post)
   })
 
   // Update post
-  .put('/:id', validate('param', idParamSchema), validate('json', updatePostSchema), async (c) => {
-    const { id } = c.req.valid('param')
-    const input = c.req.valid('json')
+  .put(
+    '/:id',
+    validate('param', idParamSchema),
+    validate('json', updatePostSchema),
+    async (c) => {
+      const { id } = c.req.valid('param')
+      const input = c.req.valid('json')
 
-    const [existing] = await db.select().from(posts).where(eq(posts.id, id)).limit(1)
-    if (!existing) throw ApiError.notFound('Post not found')
+      const [existing] = await db
+        .select()
+        .from(posts)
+        .where(eq(posts.id, id))
+        .limit(1)
+      if (!existing) throw ApiError.notFound('Post not found')
 
-    const updates: Partial<typeof existing> = {}
+      const updates: Partial<typeof existing> = {}
 
-    if (input.title !== undefined || input.slug !== undefined) {
-      const base = input.slug ?? (input.title ? slugify(input.title) : existing.slug)
-      updates.slug = await generateUniqueSlug(base, id)
-    }
+      if (input.title !== undefined || input.slug !== undefined) {
+        const base =
+          input.slug ?? (input.title ? slugify(input.title) : existing.slug)
+        updates.slug = await generateUniqueSlug(base, id)
+      }
 
-    if (input.title !== undefined) updates.title = input.title
-    if (input.content !== undefined) {
-      updates.content = input.content
-      updates.readingTime = getReadingTime(input.content)
-    }
-    if (input.excerpt !== undefined) updates.excerpt = input.excerpt ?? null
-    if (input.coverImage !== undefined) updates.coverImage = input.coverImage ?? null
-    if (input.status !== undefined) updates.status = input.status
-    if (input.categoryId !== undefined) updates.categoryId = input.categoryId ?? null
-    if (input.tags !== undefined) updates.tags = input.tags
+      if (input.title !== undefined) updates.title = input.title
+      if (input.content !== undefined) {
+        updates.content = input.content
+        updates.readingTime = getReadingTime(input.content)
+      }
+      if (input.excerpt !== undefined) updates.excerpt = input.excerpt ?? null
+      if (input.coverImage !== undefined)
+        updates.coverImage = input.coverImage ?? null
+      if (input.status !== undefined) updates.status = input.status
+      if (input.categoryId !== undefined)
+        updates.categoryId = input.categoryId ?? null
+      if (input.tags !== undefined) updates.tags = input.tags
 
-    if (input.publishedAt !== undefined) {
-      updates.publishedAt = input.publishedAt ?? null
-    } else if (input.status === 'published' && !existing.publishedAt) {
-      updates.publishedAt = new Date()
-    }
+      if (input.publishedAt !== undefined) {
+        updates.publishedAt = input.publishedAt ?? null
+      } else if (input.status === 'published' && !existing.publishedAt) {
+        updates.publishedAt = new Date()
+      }
 
-    updates.updatedAt = new Date()
+      updates.updatedAt = new Date()
 
-    const [updated] = await db
-      .update(posts)
-      .set(updates)
-      .where(eq(posts.id, id))
-      .returning()
+      const [updated] = await db
+        .update(posts)
+        .set(updates)
+        .where(eq(posts.id, id))
+        .returning()
 
-    return c.json(updated)
-  })
+      return c.json(updated)
+    },
+  )
 
   // Delete post
   .delete('/:id', validate('param', idParamSchema), async (c) => {
     const { id } = c.req.valid('param')
-    const [existing] = await db.select().from(posts).where(eq(posts.id, id)).limit(1)
+    const [existing] = await db
+      .select()
+      .from(posts)
+      .where(eq(posts.id, id))
+      .limit(1)
     if (!existing) throw ApiError.notFound('Post not found')
     await db.delete(posts).where(eq(posts.id, id))
     return c.json({ success: true })

@@ -17,7 +17,11 @@ interface EditorToolbarProps {
 }
 
 /** Editor toolbar: a mobile Write/Preview view switch plus a slot for future actions. */
-export function EditorToolbar({ view, onViewChange, children }: EditorToolbarProps) {
+export function EditorToolbar({
+  view,
+  onViewChange,
+  children,
+}: EditorToolbarProps) {
   return (
     <div
       className={cn(
@@ -26,7 +30,11 @@ export function EditorToolbar({ view, onViewChange, children }: EditorToolbarPro
         children ? 'flex' : 'flex lg:hidden',
       )}
     >
-      <div className="flex gap-1 lg:hidden" role="group" aria-label="Editor view">
+      <div
+        className="flex gap-1 lg:hidden"
+        role="group"
+        aria-label="Editor view"
+      >
         {VIEWS.map(({ value, label }) => (
           <button
             key={value}

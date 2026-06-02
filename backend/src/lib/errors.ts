@@ -27,7 +27,7 @@ export class ApiError extends Error {
   constructor(
     readonly status: ContentfulStatusCode,
     readonly code: ErrorCode,
-    message: string
+    message: string,
   ) {
     super(message)
     this.name = 'ApiError'
@@ -52,7 +52,7 @@ export function errorResponse(
   c: Context,
   status: ContentfulStatusCode,
   code: ErrorCode,
-  message: string
+  message: string,
 ) {
   const body: ErrorBody = { error: { code, message } }
   return c.json(body, status)
@@ -66,7 +66,12 @@ export function handleError(err: Error, c: Context) {
 
   if (err instanceof ZodError) {
     const first = err.issues[0]
-    return errorResponse(c, 400, ErrorCode.VALIDATION_ERROR, first?.message ?? 'Invalid request')
+    return errorResponse(
+      c,
+      400,
+      ErrorCode.VALIDATION_ERROR,
+      first?.message ?? 'Invalid request',
+    )
   }
 
   if (err instanceof HTTPException) {
@@ -84,7 +89,12 @@ export function handleError(err: Error, c: Context) {
   }
 
   logError({ message: err.message, stack: err.stack })
-  return errorResponse(c, 500, ErrorCode.INTERNAL_ERROR, 'Internal server error')
+  return errorResponse(
+    c,
+    500,
+    ErrorCode.INTERNAL_ERROR,
+    'Internal server error',
+  )
 }
 
 /** Global `app.notFound` handler. */

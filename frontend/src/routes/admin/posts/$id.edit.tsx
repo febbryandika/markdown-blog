@@ -18,15 +18,26 @@ function EditPostPage() {
   return (
     <section aria-labelledby="edit-post-heading">
       <header className="mb-8">
-        <h1 id="edit-post-heading" className="text-3xl font-bold tracking-tight leading-tight">Edit post</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Update your post and save your changes.</p>
+        <h1
+          id="edit-post-heading"
+          className="text-3xl font-bold tracking-tight leading-tight"
+        >
+          Edit post
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Update your post and save your changes.
+        </p>
       </header>
 
       {post.isLoading && <PostFormSkeleton />}
 
       {post.isError && (
         <ErrorState
-          message={post.error instanceof Error ? post.error.message : 'Failed to load post.'}
+          message={
+            post.error instanceof Error
+              ? post.error.message
+              : 'Failed to load post.'
+          }
           onRetry={() => post.refetch()}
         />
       )}

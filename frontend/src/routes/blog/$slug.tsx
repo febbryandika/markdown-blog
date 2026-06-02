@@ -59,13 +59,18 @@ function PostPage() {
       )}
 
       <header className="mb-8">
-        <h1 id="post-title" className="text-3xl font-bold tracking-tight leading-tight mb-3">
+        <h1
+          id="post-title"
+          className="text-3xl font-bold tracking-tight leading-tight mb-3"
+        >
           {post.title}
         </h1>
 
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
           {post.publishedAt && (
-            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+            <time dateTime={post.publishedAt}>
+              {formatDate(post.publishedAt)}
+            </time>
           )}
           {post.readingTime != null && (
             <>

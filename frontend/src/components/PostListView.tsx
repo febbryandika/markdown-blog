@@ -15,7 +15,13 @@ interface PostListViewProps {
   emptyMessage: string
 }
 
-export function PostListView({ query, page, to, params, emptyMessage }: PostListViewProps) {
+export function PostListView({
+  query,
+  page,
+  to,
+  params,
+  emptyMessage,
+}: PostListViewProps) {
   const { data, isLoading, isError, error, refetch } = query
 
   if (isLoading) return <PostListSkeleton />
@@ -23,7 +29,9 @@ export function PostListView({ query, page, to, params, emptyMessage }: PostList
   if (isError) {
     return (
       <ErrorState
-        message={error instanceof Error ? error.message : 'Failed to load posts.'}
+        message={
+          error instanceof Error ? error.message : 'Failed to load posts.'
+        }
         onRetry={() => refetch()}
       />
     )
@@ -40,7 +48,12 @@ export function PostListView({ query, page, to, params, emptyMessage }: PostList
           <PostCard key={post.id} post={post} />
         ))}
       </div>
-      <Pagination page={page} totalPages={data.totalPages} to={to} params={params} />
+      <Pagination
+        page={page}
+        totalPages={data.totalPages}
+        to={to}
+        params={params}
+      />
     </div>
   )
 }

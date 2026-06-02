@@ -17,7 +17,9 @@ vi.mock('@/db', async () => ({ db: (await import('./utils/db')).testDb }))
 
 vi.mock('@/lib/auth', async () => {
   const { sessionRef } = await import('./utils/auth')
-  return { auth: { api: { getSession: vi.fn(async () => sessionRef.current) } } }
+  return {
+    auth: { api: { getSession: vi.fn(async () => sessionRef.current) } },
+  }
 })
 
 beforeAll(async () => {

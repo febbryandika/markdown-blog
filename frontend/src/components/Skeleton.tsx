@@ -27,7 +27,10 @@ export function PostListSkeleton() {
   return (
     <div role="status" aria-busy="true">
       <span className="sr-only">Loading posts…</span>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-hidden="true">
+      <div
+        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        aria-hidden="true"
+      >
         {Array.from({ length: 6 }).map((_, i) => (
           <PostCardSkeleton key={i} />
         ))}
@@ -109,11 +112,21 @@ export function AdminTableSkeleton() {
           <tbody className="divide-y">
             {Array.from({ length: 5 }).map((_, i) => (
               <tr key={i} className="bg-card">
-                <td className="px-4 py-3"><Skeleton className="h-4 w-48" /></td>
-                <td className="px-4 py-3"><Skeleton className="h-5 w-20 rounded-full" /></td>
-                <td className="hidden sm:table-cell px-4 py-3"><Skeleton className="h-4 w-24" /></td>
-                <td className="hidden sm:table-cell px-4 py-3"><Skeleton className="h-4 w-24" /></td>
-                <td className="px-4 py-3"><Skeleton className="h-6 w-12 ml-auto" /></td>
+                <td className="px-4 py-3">
+                  <Skeleton className="h-4 w-48" />
+                </td>
+                <td className="px-4 py-3">
+                  <Skeleton className="h-5 w-20 rounded-full" />
+                </td>
+                <td className="hidden sm:table-cell px-4 py-3">
+                  <Skeleton className="h-4 w-24" />
+                </td>
+                <td className="hidden sm:table-cell px-4 py-3">
+                  <Skeleton className="h-4 w-24" />
+                </td>
+                <td className="px-4 py-3">
+                  <Skeleton className="h-6 w-12 ml-auto" />
+                </td>
               </tr>
             ))}
           </tbody>

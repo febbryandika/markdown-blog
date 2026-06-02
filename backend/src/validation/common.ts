@@ -5,7 +5,10 @@ export const slugSchema = z
   .string()
   .trim()
   .min(1)
-  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be lowercase, hyphen-separated')
+  .regex(
+    /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+    'Slug must be lowercase, hyphen-separated',
+  )
 
 /** Derive a slug from a title: lowercase, non-alphanumerics → hyphens, trimmed. */
 export function slugify(title: string): string {

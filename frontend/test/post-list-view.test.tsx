@@ -19,7 +19,7 @@ describe('PostListView', () => {
         page={1}
         to="/blog/"
         emptyMessage="No posts published yet."
-      />
+      />,
     )
 
     expect(screen.getByRole('status')).toBeInTheDocument()

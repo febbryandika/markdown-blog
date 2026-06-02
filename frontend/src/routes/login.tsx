@@ -69,13 +69,21 @@ function LoginPage() {
           </p>
         </header>
 
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate aria-busy={loading}>
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
+          noValidate
+          aria-busy={loading}
+        >
           <FormField
             id="email"
             label="Email"
             type="email"
             value={email}
-            onChange={(v) => { setEmail(v); setError('') }}
+            onChange={(v) => {
+              setEmail(v)
+              setError('')
+            }}
             autoComplete="email"
             placeholder="you@example.com"
             disabled={loading}
@@ -87,7 +95,10 @@ function LoginPage() {
             label="Password"
             type="password"
             value={password}
-            onChange={(v) => { setPassword(v); setError('') }}
+            onChange={(v) => {
+              setPassword(v)
+              setError('')
+            }}
             autoComplete="current-password"
             placeholder="••••••••"
             disabled={loading}
@@ -96,7 +107,11 @@ function LoginPage() {
 
           {error && <FormError message={error} />}
 
-          <SubmitButton loading={loading} label="Sign in" loadingLabel="Signing in…" />
+          <SubmitButton
+            loading={loading}
+            label="Sign in"
+            loadingLabel="Signing in…"
+          />
         </form>
       </div>
     </div>

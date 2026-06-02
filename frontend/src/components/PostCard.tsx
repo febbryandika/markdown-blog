@@ -28,7 +28,11 @@ export function PostCard({ post }: PostCardProps) {
         </Link>
 
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          {post.publishedAt && <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>}
+          {post.publishedAt && (
+            <time dateTime={post.publishedAt}>
+              {formatDate(post.publishedAt)}
+            </time>
+          )}
           {post.readingTime != null && (
             <>
               <span aria-hidden="true">·</span>
@@ -39,7 +43,9 @@ export function PostCard({ post }: PostCardProps) {
       </div>
 
       {post.excerpt && (
-        <p className="text-sm text-muted-foreground line-clamp-3">{post.excerpt}</p>
+        <p className="text-sm text-muted-foreground line-clamp-3">
+          {post.excerpt}
+        </p>
       )}
 
       {post.tags.length > 0 && (

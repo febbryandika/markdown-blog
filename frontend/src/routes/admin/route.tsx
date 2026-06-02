@@ -9,7 +9,10 @@ export const Route = createFileRoute('/admin')({
 function AdminLayout() {
   return (
     <div>
-      <nav aria-label="Admin navigation" className="mb-6 flex items-center gap-4 border-b pb-4">
+      <nav
+        aria-label="Admin navigation"
+        className="mb-6 flex items-center gap-4 border-b pb-4"
+      >
         <Link
           to="/admin"
           className="text-sm font-medium hover:text-primary transition-colors"

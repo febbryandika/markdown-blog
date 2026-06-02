@@ -11,7 +11,9 @@ import * as schema from '../../src/db/schema'
 const client = new PGlite()
 export const testDb = drizzle(client, { schema })
 
-const migrationsFolder = fileURLToPath(new URL('../../drizzle', import.meta.url))
+const migrationsFolder = fileURLToPath(
+  new URL('../../drizzle', import.meta.url),
+)
 
 /** Build the schema by replaying the real drizzle migration. Run once per file. */
 export async function setupTestDb() {

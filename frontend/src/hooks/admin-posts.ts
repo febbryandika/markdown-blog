@@ -1,8 +1,15 @@
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 import { client } from '@/lib/client'
 import type { InferRequestType, InferResponseType } from 'hono/client'
 
-export type AdminPostsResponse = InferResponseType<typeof client.api.admin.posts.$get>
+export type AdminPostsResponse = InferResponseType<
+  typeof client.api.admin.posts.$get
+>
 export type AdminPost = AdminPostsResponse[number]
 
 export function useAdminPosts() {
@@ -20,7 +27,9 @@ export function usePreview(content: string) {
   return useQuery({
     queryKey: ['preview', content],
     queryFn: async () => {
-      const res = await client.api.admin.posts.preview.$post({ json: { content } })
+      const res = await client.api.admin.posts.preview.$post({
+        json: { content },
+      })
       if (!res.ok) throw new Error('Failed to render preview')
       return res.json()
     },
@@ -45,7 +54,9 @@ export function useDeletePost() {
     },
     onMutate: async (id) => {
       await queryClient.cancelQueries({ queryKey: ['admin-posts'] })
-      const snapshot = queryClient.getQueryData<AdminPostsResponse>(['admin-posts'])
+      const snapshot = queryClient.getQueryData<AdminPostsResponse>([
+        'admin-posts',
+      ])
       queryClient.setQueryData<AdminPostsResponse>(
         ['admin-posts'],
         (prev) => prev?.filter((p) => p.id !== id) ?? [],
@@ -64,7 +75,10 @@ export function useDeletePost() {
 }
 
 /** Pull the API's structured error message ({ error: { message } }) for inline display. */
-async function getErrorMessage(res: Response, fallback: string): Promise<string> {
+async function getErrorMessage(
+  res: Response,
+  fallback: string,
+): Promise<string> {
   try {
     const body = (await res.json()) as { error?: { message?: string } }
     return body.error?.message ?? fallback
@@ -96,7 +110,9 @@ export function useAdminPost(id: string) {
   })
 }
 
-type CreatePostInput = InferRequestType<typeof client.api.admin.posts.$post>['json']
+type CreatePostInput = InferRequestType<
+  typeof client.api.admin.posts.$post
+>['json']
 
 export function useCreatePost() {
   const queryClient = useQueryClient()
@@ -104,7 +120,8 @@ export function useCreatePost() {
   return useMutation({
     mutationFn: async (input: CreatePostInput) => {
       const res = await client.api.admin.posts.$post({ json: input })
-      if (!res.ok) throw new Error(await getErrorMessage(res, 'Failed to create post'))
+      if (!res.ok)
+        throw new Error(await getErrorMessage(res, 'Failed to create post'))
       return res.json()
     },
     onSuccess: () => {
@@ -113,15 +130,21 @@ export function useCreatePost() {
   })
 }
 
-type UpdatePostInput = InferRequestType<(typeof client.api.admin.posts)[':id']['$put']>['json']
+type UpdatePostInput = InferRequestType<
+  (typeof client.api.admin.posts)[':id']['$put']
+>['json']
 
 export function useUpdatePost(id: string) {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async (input: UpdatePostInput) => {
-      const res = await client.api.admin.posts[':id'].$put({ param: { id }, json: input })
-      if (!res.ok) throw new Error(await getErrorMessage(res, 'Failed to update post'))
+      const res = await client.api.admin.posts[':id'].$put({
+        param: { id },
+        json: input,
+      })
+      if (!res.ok)
+        throw new Error(await getErrorMessage(res, 'Failed to update post'))
       return res.json()
     },
     onSuccess: () => {
