@@ -25,7 +25,7 @@ function BlogPage() {
       <PostListView
         query={query}
         page={page}
-        to="/blog/"
+        to="/blog"
         emptyMessage="No posts published yet."
       />
     </section>

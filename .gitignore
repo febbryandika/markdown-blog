@@ -85,7 +85,7 @@ playwright-report/
 playwright/.cache/
 .playwright-mcp/
 
-# Private project docs (planning, specs)
-docs/
+# Private project docs (planning, specs) — but keep README screenshots
+docs/*
 !docs/screenshots/
 !docs/screenshots/**

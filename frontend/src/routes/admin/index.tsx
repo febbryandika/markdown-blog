@@ -127,7 +127,7 @@ function AdminPage() {
             </TBody>
           </Table>
 
-          <Pagination page={page} totalPages={totalPages} to="/admin/" />
+          <Pagination page={page} totalPages={totalPages} to="/admin" />
 
           <ConfirmDialog
             open={pendingDeleteId !== null}

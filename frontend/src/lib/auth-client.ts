@@ -5,4 +5,4 @@ export const authClient = createAuthClient({
   baseURL: env.VITE_API_URL,
 })
 
-export const { useSession, signIn, signUp, signOut } = authClient
+export const { useSession, signIn, signOut } = authClient
