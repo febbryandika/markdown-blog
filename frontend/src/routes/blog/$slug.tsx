@@ -43,6 +43,13 @@ function PostPage() {
 
   return (
     <article className="max-w-2xl mx-auto" aria-labelledby="post-title">
+      <Link
+        to="/blog"
+        className="mb-6 inline-flex items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        ← Blog
+      </Link>
+
       {post.coverImage && (
         <img
           src={post.coverImage}

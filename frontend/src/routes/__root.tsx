@@ -49,10 +49,19 @@ function RootLayout() {
   return (
     <div className="min-h-screen bg-background">
       <nav className="border-b px-4 sm:px-6 py-3 flex flex-wrap items-center gap-4">
-        <Link to="/" className="font-semibold text-foreground hover:text-primary">
+        <Link
+          to="/"
+          activeOptions={{ exact: true }}
+          activeProps={{ 'aria-current': 'page' }}
+          className="font-semibold text-foreground transition-colors hover:text-primary aria-[current=page]:text-primary"
+        >
           My Project
         </Link>
-        <Link to="/blog" className="text-sm text-muted-foreground hover:text-foreground">
+        <Link
+          to="/blog"
+          activeProps={{ 'aria-current': 'page' }}
+          className="text-sm text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-primary"
+        >
           Blog
         </Link>
         <div className="ml-auto flex items-center gap-4">
