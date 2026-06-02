@@ -10,6 +10,7 @@ import { AdminTableSkeleton } from '@/components/Skeleton'
 import { EmptyState } from '@/components/EmptyState'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/admin/Table'
 import { formatDate } from '@/lib/utils'
+import { buttonPrimary } from '@/lib/ui'
 
 const PAGE_SIZE = 10
 
@@ -52,10 +53,7 @@ function AdminPage() {
             </p>
           )}
         </div>
-        <Link
-          to="/admin/posts/new"
-          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-        >
+        <Link to="/admin/posts/new" className={buttonPrimary}>
           New post
         </Link>
       </header>
@@ -76,7 +74,7 @@ function AdminPage() {
           action={
             <Link
               to="/admin/posts/new"
-              className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              className={buttonPrimary}
             >
               New post
             </Link>

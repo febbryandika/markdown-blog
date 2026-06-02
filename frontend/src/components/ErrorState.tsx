@@ -1,3 +1,5 @@
+import { buttonOutline } from '@/lib/ui'
+
 interface ErrorStateProps {
   message?: string
   onRetry?: () => void
@@ -11,7 +13,7 @@ export function ErrorState({ message = 'Something went wrong while loading this 
         <button
           type="button"
           onClick={onRetry}
-          className="rounded-md border px-4 py-2 text-sm font-medium hover:bg-accent transition-colors"
+          className={buttonOutline}
         >
           Try again
         </button>
