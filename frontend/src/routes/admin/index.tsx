@@ -98,14 +98,14 @@ function AdminPage() {
             <TBody>
               {pagePosts.map((post) => (
                 <TR key={post.id}>
-                  <TD className="font-medium max-w-xs truncate">{post.title}</TD>
+                  <TD className="font-medium max-w-[9rem] truncate sm:max-w-xs">{post.title}</TD>
                   <TD><StatusBadge status={post.status} /></TD>
                   <TD className="hidden sm:table-cell text-muted-foreground whitespace-nowrap">{formatDate(post.updatedAt)}</TD>
                   <TD className="hidden sm:table-cell text-muted-foreground whitespace-nowrap">
                     {post.publishedAt ? formatDate(post.publishedAt) : '—'}
                   </TD>
                   <TD className="text-right">
-                    <div className="flex items-center justify-end gap-2">
+                    <div className="flex flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-2">
                       <Link
                         to="/admin/posts/$id/edit"
                         params={{ id: post.id }}
