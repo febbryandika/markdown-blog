@@ -9,9 +9,9 @@ export function TagBadge({ tag }: TagBadgeProps) {
     <Link
       to="/blog/tag/$tag"
       params={{ tag }}
-      className="inline-block rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground hover:bg-accent transition-colors"
+      className="inline-flex items-center rounded-full border border-border/70 px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground transition-colors hover:border-brand/40 hover:text-brand"
     >
-      #{tag}
+      {tag}
     </Link>
   )
 }

@@ -18,14 +18,19 @@ function BlogPage() {
 
   return (
     <section aria-labelledby="blog-heading">
-      <header className="mb-8">
+      <header className="animate-fade-up mb-10 border-b border-border/70 pb-6">
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-brand">
+          The Journal
+        </p>
         <h1
           id="blog-heading"
-          className="text-3xl font-bold tracking-tight leading-tight"
+          className="mt-3 font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl"
         >
           Blog
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">Latest posts</p>
+        <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
+          Essays, notes, and experiments — newest first.
+        </p>
       </header>
       <PostListView
         query={query}

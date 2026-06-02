@@ -12,9 +12,14 @@ export function ErrorState({
   return (
     <div
       role="alert"
-      className="flex flex-col items-center justify-center py-20 gap-4 text-center"
+      className="flex flex-col items-center justify-center gap-4 py-24 text-center"
     >
-      <p className="text-destructive font-medium">{message}</p>
+      <p className="font-mono text-[0.7rem] uppercase tracking-[0.25em] text-destructive">
+        Error
+      </p>
+      <p className="max-w-md font-display text-2xl font-semibold tracking-tight">
+        {message}
+      </p>
       {onRetry && (
         <button type="button" onClick={onRetry} className={buttonOutline}>
           Try again
