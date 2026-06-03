@@ -10,24 +10,30 @@ Built as a **Bun-workspace monorepo** with an end-to-end **type-safe RPC contrac
 
 ## Screenshots
 
-|                  Public blog list                   |                               Post detail                               |
-| :-------------------------------------------------: | :---------------------------------------------------------------------: |
-| ![Public blog list](docs/screenshots/blog-list.png) | ![Post detail with rendered Markdown](docs/screenshots/post-detail.png) |
+|                     Home — hero & latest writing                     |                  Public blog list                   |
+| :------------------------------------------------------------------: | :-------------------------------------------------: |
+| ![Home page with hero and latest writing](docs/screenshots/home.png) | ![Public blog list](docs/screenshots/blog-list.png) |
 
-|                        Admin dashboard                         |            Markdown editor (split-pane live preview)             |
-| :------------------------------------------------------------: | :--------------------------------------------------------------: |
-| ![Admin post management](docs/screenshots/admin-dashboard.png) | ![Split-pane Markdown editor](docs/screenshots/admin-editor.png) |
+|                      Post — light theme                       |                         Post — dark theme                         |
+| :-----------------------------------------------------------: | :---------------------------------------------------------------: |
+| ![Post detail, light theme](docs/screenshots/post-detail.png) | ![Post detail, dark theme](docs/screenshots/post-detail-dark.png) |
+
+|                        Admin dashboard                         |                     Markdown editor — split-pane live preview                      |
+| :------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
+| ![Admin post management](docs/screenshots/admin-dashboard.png) | ![Split-pane Markdown editor with live preview](docs/screenshots/admin-editor.png) |
 
 <p align="center">
   <img src="docs/screenshots/mobile.png" alt="Responsive mobile layout" width="280" />
   <br />
-  <em>Mobile-responsive layout</em>
+  <em>Responsive mobile layout</em>
 </p>
 
 ---
 
 ## Features
 
+- **Editorial reading experience** — warm "paper & ink" design with a persisted **light/dark theme toggle**, display/serif/mono typography (Fraunces · Newsreader · JetBrains Mono), a per-post reading-progress bar, and reveal animations gated by `prefers-reduced-motion`.
+- **Home** — landing page with a hero and a "Latest writing" section (featured post + recent grid).
 - **Auth-protected admin** — single author, email + password (better-auth). `/admin/*` redirects to `/login` when unauthenticated.
 - **Markdown editor** — split pane (textarea + rendered preview), debounced server preview, keyboard-accessible toolbar.
 - **Posts** — title, auto-generated (editable) slug, excerpt, Markdown content, cover image, category, tags, `draft`/`published` status, reading time.
